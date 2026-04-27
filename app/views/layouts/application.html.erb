@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title><%= content_for(:title).present? ? "#{content_for(:title)} — Lumio Inc." : "Lumio Inc. — テクノロジーで、静かな前進を" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= content_for(:description) || 'Lumio Inc. — クラウド・AI・受託開発を通じて、企業の成長をやさしく後押しするテクノロジーパートナー。' %>">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+
+    <header class="site-header">
+      <div class="container row">
+        <%= link_to root_path, class: "brand" do %>
+          <span class="mark"></span>LUMIO
+        <% end %>
+        <nav class="nav">
+          <%= link_to "トップ",         root_path,        class: current_page?(root_path)     ? "active" : "" %>
+          <%= link_to "サービス",       services_path,    class: current_page?(services_path) ? "active" : "" %>
+          <%= link_to "会社概要",       about_path,       class: current_page?(about_path)    ? "active" : "" %>
+          <%= link_to "お問い合わせ",   new_contact_path, class: current_page?(new_contact_path) ? "active" : "" %>
+          <%= link_to "無料相談 →",     new_contact_path, class: "cta" %>
+        </nav>
+      </div>
+    </header>
+
+    <% if notice.present? %>
+      <div style="position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;background:#ecf4f0;border:1px solid #b6c8a8;color:#3a3f4d;padding:12px 24px;border-radius:var(--radius-pill);font-size:14px;white-space:nowrap;box-shadow:var(--shadow);">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert.present? %>
+      <div style="position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;background:#fbeee6;border:1px solid #d8b6c4;color:#3a3f4d;padding:12px 24px;border-radius:var(--radius-pill);font-size:14px;white-space:nowrap;box-shadow:var(--shadow);">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="grid">
+          <div>
+            <%= link_to root_path, class: "brand" do %>
+              <span class="mark"></span>LUMIO
+            <% end %>
+            <p style="margin-top:18px;color:var(--ink-2);font-size:14px;line-height:1.9;max-width:36ch;">
+              Lumio Inc. — テクノロジーで、静かな前進を。<br>
+              東京都渋谷区神宮前 5-12-3 ルミオビル 4F
+            </p>
+          </div>
+          <div>
+            <h5>Sitemap</h5>
+            <ul>
+              <li><%= link_to "トップ",         root_path %></li>
+              <li><%= link_to "サービス",       services_path %></li>
+              <li><%= link_to "会社概要",       about_path %></li>
+              <li><%= link_to "お問い合わせ",   new_contact_path %></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Services</h5>
+            <ul>
+              <li><%= link_to "クラウド基盤", services_path %></li>
+              <li><%= link_to "AI・データ",   services_path %></li>
+              <li><%= link_to "受託開発",     services_path %></li>
+              <li><%= link_to "技術顧問",     services_path %></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Contact</h5>
+            <ul>
+              <li>hello@lumio.co.jp</li>
+              <li>03-5XXX-XXXX</li>
+              <li>平日 10:00 - 18:00</li>
+            </ul>
+          </div>
+        </div>
+        <div class="meta">
+          <span>&copy; <%= Time.current.year %> Lumio Inc.</span>
+          <span class="en">Privacy / Terms / Security</span>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>

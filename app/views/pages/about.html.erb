@@ -1,0 +1,278 @@
+<% content_for :title, "会社概要" %>
+
+<% content_for :head do %>
+<style>
+.about-hero {
+  padding: 100px 0 80px;
+  background:
+    radial-gradient(50% 50% at 80% 20%, #f1eef7 0%, transparent 60%),
+    radial-gradient(40% 40% at 10% 90%, #ecf4f0 0%, transparent 60%),
+    var(--bg);
+}
+.about-hero .breadcrumb {
+  display: flex; gap: 8px; align-items: center;
+  font-family: var(--font-en); font-size: 12px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 28px;
+}
+.about-hero h1 { font-size: clamp(40px, 5vw, 64px); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+.about-hero .ja-sub { font-family: var(--font-serif); font-size: 20px; color: var(--ink-3); margin-top: 24px; letter-spacing: 0.06em; }
+
+.mission { padding: 110px 0; }
+.mission .grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
+.mission .label { font-family: var(--font-en); font-size: 13px; letter-spacing: 0.2em; color: var(--ink-3); text-transform: uppercase; }
+.mission h2 { font-family: var(--font-serif); font-size: clamp(34px, 4vw, 52px); font-weight: 500; line-height: 1.55; margin-top: 40px; letter-spacing: 0.02em; color: var(--ink); }
+.mission .accent { color: var(--accent-ink); }
+.mission p.body-text { color: var(--ink-2); font-size: 15px; line-height: 2.05; margin-top: 28px; }
+.mission p.body-text + p.body-text { margin-top: 18px; }
+
+.values { padding: 110px 0; background: var(--bg-2); }
+.values-head { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: end; margin-bottom: 56px; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+.value { background: var(--bg-2); padding: 40px 36px 44px; display: flex; flex-direction: column; gap: 16px; min-height: 280px; }
+.value .num { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.2em; color: var(--ink-3); }
+.value h3 { font-family: var(--font-serif); font-size: 26px; font-weight: 500; line-height: 1.5; letter-spacing: 0.04em; }
+.value h3 .en { display: block; font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; color: var(--ink-4); text-transform: uppercase; margin-top: 6px; font-weight: 500; }
+.value p { color: var(--ink-2); font-size: 14px; line-height: 1.95; margin: 0; }
+
+.ceo { padding: 120px 0; }
+.ceo .grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 70px; align-items: start; }
+.portrait { height: 540px; border-radius: var(--radius-lg); background: radial-gradient(60% 60% at 50% 30%, #e7d6e7 0%, transparent 60%), linear-gradient(180deg, #eef3fa 0%, #f3ebec 100%); border: 1px solid var(--line-2); position: relative; overflow: hidden; }
+.portrait::after { content: ""; position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff, #d8b6c4 60%, #a87f93); opacity: 0.85; filter: blur(0.5px); }
+.portrait .label { position: absolute; bottom: 22px; left: 26px; font-family: var(--font-en); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+.ceo .label-en { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+.ceo h2 { font-family: var(--font-serif); font-size: clamp(32px, 3.6vw, 46px); font-weight: 500; line-height: 1.5; margin-top: 24px; }
+.ceo p { color: var(--ink-2); font-size: 15px; line-height: 2.05; margin-top: 22px; }
+.ceo .sign { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line-2); display: flex; align-items: end; justify-content: space-between; }
+.ceo .sign .name { font-size: 17px; font-weight: 600; }
+.ceo .sign .role { font-size: 12px; color: var(--ink-3); margin-top: 4px; letter-spacing: 0.06em; }
+.ceo .sign .signature { font-family: var(--font-serif); font-size: 28px; color: var(--ink-2); font-style: italic; letter-spacing: 0.08em; }
+
+.history { padding: 110px 0; background: var(--bg-2); }
+.history-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+.timeline { position: relative; }
+.t-item { display: grid; grid-template-columns: 80px 1fr; gap: 40px; padding-bottom: 36px; position: relative; }
+.t-item .yr { font-family: var(--font-en); font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+.t-item .yr small { display: block; font-size: 11px; letter-spacing: 0.16em; color: var(--ink-3); margin-top: 4px; text-transform: uppercase; font-weight: 500; }
+.t-item .t-body { padding-left: 30px; position: relative; border-left: 1px solid var(--line); }
+.t-item .t-body::before { content: ""; position: absolute; left: -6px; top: 10px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg-2); border: 1.5px solid var(--accent); }
+.t-item.featured .t-body::before { background: var(--accent); }
+.t-item .t-body h4 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+.t-item .t-body p { color: var(--ink-2); font-size: 14px; line-height: 1.85; margin: 0; padding-bottom: 8px; }
+
+.team-section { padding: 110px 0; }
+.team-head { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: end; margin-bottom: 56px; }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.member { display: flex; flex-direction: column; gap: 14px; }
+.member .face { aspect-ratio: 1 / 1.15; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-2); position: relative; }
+.member.m1 .face { background: linear-gradient(160deg, #eef3fa 0%, #e7d6e7 100%); }
+.member.m2 .face { background: linear-gradient(160deg, #ecf4f0 0%, #f6eeda 100%); }
+.member.m3 .face { background: linear-gradient(160deg, #f3ebec 0%, #eef3fa 100%); }
+.member.m4 .face { background: linear-gradient(160deg, #f1eef7 0%, #fbeee6 100%); }
+.member .face::after { content: ""; position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%); width: 56%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.9), rgba(255,255,255,0) 65%); }
+.member .face::before { content: ""; position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); width: 44%; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(160deg, rgba(31,35,48,0.18), rgba(31,35,48,0.04)); }
+.member .meta-bar { display: flex; justify-content: space-between; font-family: var(--font-en); font-size: 11px; letter-spacing: 0.14em; color: var(--ink-3); text-transform: uppercase; }
+.member h4 { font-size: 17px; font-weight: 600; line-height: 1.5; margin: 0; }
+.member .role { font-size: 13px; color: var(--ink-3); }
+.member .quote { font-family: var(--font-serif); font-size: 13px; color: var(--ink-2); line-height: 1.85; letter-spacing: 0.04em; border-top: 1px solid var(--line-2); padding-top: 14px; margin-top: 4px; }
+
+.info-section { padding: 110px 0; background: var(--bg-2); }
+.info-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+.info-table { width: 100%; border-top: 1px solid var(--line); }
+.info-table .info-row { display: grid; grid-template-columns: 200px 1fr; gap: 40px; padding: 22px 4px; border-bottom: 1px solid var(--line); }
+.info-table .key { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; }
+.info-table .val { font-size: 14.5px; color: var(--ink); line-height: 1.85; }
+.info-table .val small { color: var(--ink-3); font-size: 12px; display: block; margin-top: 2px; }
+.map-block { background: linear-gradient(140deg, #eef3fa 0%, #f3ebec 100%); border: 1px solid var(--line-2); border-radius: var(--radius-lg); height: 320px; position: relative; overflow: hidden; margin-top: 28px; }
+.map-block svg { width: 100%; height: 100%; }
+.map-block .pin { position: absolute; top: 50%; left: 52%; width: 14px; height: 14px; transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 6px rgba(107,140,206,0.25), 0 0 0 14px rgba(107,140,206,0.12); }
+
+@media (max-width: 980px) {
+  .mission .grid, .values-head, .ceo .grid, .history-grid, .team-head, .info-grid { grid-template-columns: 1fr; gap: 40px; }
+  .values-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+<% end %>
+
+<section class="about-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <%= link_to "Home", root_path %><span>/</span><span style="color:var(--ink);">About</span>
+    </div>
+    <h1>静かに、しなやかに。<br>テクノロジーと、長く付き合うために。</h1>
+    <p class="ja-sub">— Lumio Inc. について</p>
+  </div>
+</section>
+
+<section class="mission">
+  <div class="container grid">
+    <div><span class="label">— Our Mission</span></div>
+    <div>
+      <h2>"使われ続ける" 仕組みを、<br><span class="accent">事業のそばで</span> 編みつづける。</h2>
+      <p class="body-text">私たちLumio (ルミオ) は、2012年に東京・神宮前で創業した、12名の小さなテクノロジー会社です。クラウド・AI・受託開発の3領域を軸に、これまで120以上のプロジェクトを、お客様の現場と地続きで支えてきました。</p>
+      <p class="body-text">私たちが大切にしているのは、声高な革新ではなく、現場に馴染む設計です。新しい技術を取り入れることそのものが目的になってしまうと、運用がきしみ、人が疲れます。だから私たちは、毎回かならず立ち返ります。"これは、誰の、どんな日常を軽くするのか" と。</p>
+      <p class="body-text">小さく始めて、確かに育てる。引き渡したあとも、続く設計を。Lumioという名前には、ラテン語の "lumen (光)" と、織物のように関係を編む "loom" の二つの意味を込めました。</p>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="container">
+    <div class="values-head">
+      <div>
+        <span class="eyebrow">Values</span>
+        <h2 class="h-section" style="margin-top:18px;">私たちの<br>3つの約束。</h2>
+      </div>
+      <p class="lede">どんなに技術が変わっても、私たちが守り続けたい原則です。日々の仕事、採用、評価、すべてのよりどころとしています。</p>
+    </div>
+    <div class="values-grid">
+      <div class="value">
+        <span class="num">VALUE 01</span>
+        <h3>静かに、確かに。<span class="en">Quiet, but solid.</span></h3>
+        <p>派手なアウトプットよりも、長く動き続ける設計を。地味な仕事に手を抜かないことを、私たちの誇りにしています。</p>
+      </div>
+      <div class="value">
+        <span class="num">VALUE 02</span>
+        <h3>現場に、馴染む。<span class="en">Fit the daily flow.</span></h3>
+        <p>導入してからが本番です。運用と改善のフェーズまで含めて設計し、お客様の日常に自然に溶け込む仕組みを。</p>
+      </div>
+      <div class="value">
+        <span class="num">VALUE 03</span>
+        <h3>知は、残す。<span class="en">Leave knowledge behind.</span></h3>
+        <p>納品物だけでなく、お客様のチームに技術と意思決定の文脈を残します。私たちが去ったあとも、自走できるように。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ceo">
+  <div class="container grid">
+    <div class="portrait"><span class="label">PORTRAIT — CEO</span></div>
+    <div>
+      <span class="label-en">Message from CEO</span>
+      <h2>"急がば、編め" を、<br>合言葉に。</h2>
+      <p>私はもともと地方の小さな製造業の家に生まれ、ものづくりの現場を間近に見て育ちました。良いものは、決して声を張り上げない。けれど、何十年も使われ続ける。Lumioをつくったのは、そんなテクノロジー会社が、いまの日本にもう少し増えてもいいのではと思ったからです。</p>
+      <p>AIやクラウドは、たしかに目を見張るスピードで進化しています。でも、私たちが本当に大切にしたいのは、その先で続く"暮らし"の手触り。お客様の現場で誰かがそっと笑ってくれる、その一瞬を作るために、これからも編むようにテクノロジーと向き合っていきます。</p>
+      <div class="sign">
+        <div>
+          <div class="name">中村 葵 (なかむら あおい)</div>
+          <div class="role">Founder &amp; CEO</div>
+        </div>
+        <div class="signature">Aoi N.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="history">
+  <div class="container history-grid">
+    <div>
+      <span class="eyebrow">History</span>
+      <h2 class="h-section" style="margin-top:18px;">14年の<br>歩み。</h2>
+      <p class="lede" style="margin-top:24px;">2012年の創業から、お客様と一緒に少しずつ積み重ねてきた道のりです。</p>
+    </div>
+    <div class="timeline">
+      <div class="t-item featured">
+        <div class="yr">2012<small>founded</small></div>
+        <div class="t-body"><h4>創業 — 神宮前のマンション一室で</h4><p>共同創業者2名で、Webアプリの受託開発からスタート。最初のお客様は、いまも継続のお取引先です。</p></div>
+      </div>
+      <div class="t-item">
+        <div class="yr">2015<small>milestone</small></div>
+        <div class="t-body"><h4>クラウド事業を本格化</h4><p>AWS Advanced Partnerに認定。レガシーシステムのクラウド移行支援が、第二の柱に。</p></div>
+      </div>
+      <div class="t-item">
+        <div class="yr">2018<small>expansion</small></div>
+        <div class="t-body"><h4>渋谷区神宮前に本社移転</h4><p>社員数が10名を超え、現在の本社「ルミオビル」に移転。データ基盤事業も立ち上げました。</p></div>
+      </div>
+      <div class="t-item featured">
+        <div class="yr">2023<small>new chapter</small></div>
+        <div class="t-body"><h4>AI事業を新設</h4><p>生成AI領域の専任チームを立ち上げ。RAGとガードレールを軸に、業務適用型のAI実装を開始。</p></div>
+      </div>
+      <div class="t-item">
+        <div class="yr">2025<small>recognition</small></div>
+        <div class="t-body"><h4>創業120社目のお取引先を達成</h4><p>ISMS / ISO 27001、Pマークを取得。継続発注率は96%、長くお付き合いいただくお客様に支えられています。</p></div>
+      </div>
+      <div class="t-item">
+        <div class="yr">2026<small>now</small></div>
+        <div class="t-body"><h4>"編むように" のこれから</h4><p>技術顧問サービスを正式メニュー化。社員12名、お客様120社、これからも、静かな前進を。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team-section">
+  <div class="container">
+    <div class="team-head">
+      <div>
+        <span class="eyebrow">Team</span>
+        <h2 class="h-section" style="margin-top:18px;">編む人たち。</h2>
+      </div>
+      <p class="lede">12名の専門家が、それぞれの得意を持ち寄って、お客様のプロジェクトを編んでいます。代表的なメンバーをご紹介します。</p>
+    </div>
+    <div class="team-grid">
+      <div class="member m1"><div class="face"></div><div class="meta-bar"><span>01</span><span>FOUNDER</span></div><h4>中村 葵</h4><div class="role">Founder &amp; CEO</div><p class="quote">"急がば、編め。"</p></div>
+      <div class="member m2"><div class="face"></div><div class="meta-bar"><span>02</span><span>CTO</span></div><h4>大野 倫</h4><div class="role">CTO / Cloud Architect</div><p class="quote">"設計の8割は、捨てるものを決めること。"</p></div>
+      <div class="member m3"><div class="face"></div><div class="meta-bar"><span>03</span><span>HEAD OF AI</span></div><h4>吉田 紗良</h4><div class="role">Head of AI &amp; Data</div><p class="quote">"使われない仕組みは、無いのと同じ。"</p></div>
+      <div class="member m4"><div class="face"></div><div class="meta-bar"><span>04</span><span>HEAD OF DESIGN</span></div><h4>森下 慎</h4><div class="role">Design Director</div><p class="quote">"丁寧さは、最大の差別化になる。"</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section">
+  <div class="container info-grid">
+    <div>
+      <span class="eyebrow">Company Info</span>
+      <h2 class="h-section" style="margin-top:18px;">会社情報</h2>
+      <p class="lede" style="margin-top:24px;">登記情報や所在地、認証情報などをまとめています。お取引・与信ご検討の際にご参照ください。</p>
+      <div class="map-block">
+        <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice">
+          <g stroke="#9aa0ad" stroke-width="0.5" fill="none" opacity="0.4">
+            <path d="M0 80 L400 60 M0 160 L400 140 M0 240 L400 220"/>
+            <path d="M80 0 L100 320 M180 0 L200 320 M280 0 L300 320"/>
+          </g>
+          <g fill="#fff" stroke="#9aa0ad" stroke-width="0.4" opacity="0.7">
+            <rect x="40" y="40" width="50" height="35" rx="2"/>
+            <rect x="120" y="100" width="60" height="40" rx="2"/>
+            <rect x="220" y="60" width="55" height="50" rx="2"/>
+            <rect x="60" y="180" width="70" height="45" rx="2"/>
+            <rect x="180" y="200" width="50" height="40" rx="2"/>
+            <rect x="270" y="170" width="80" height="60" rx="2"/>
+            <rect x="100" y="260" width="60" height="40" rx="2"/>
+            <rect x="240" y="260" width="80" height="40" rx="2"/>
+          </g>
+        </svg>
+        <span class="pin"></span>
+      </div>
+    </div>
+    <div>
+      <div class="info-table">
+        <div class="info-row"><div class="key">商号</div><div class="val">Lumio Inc. (株式会社ルミオ)</div></div>
+        <div class="info-row"><div class="key">設立</div><div class="val">2012年4月<small>創業より14年</small></div></div>
+        <div class="info-row"><div class="key">代表者</div><div class="val">代表取締役 中村 葵</div></div>
+        <div class="info-row"><div class="key">資本金</div><div class="val">5,000万円</div></div>
+        <div class="info-row"><div class="key">従業員数</div><div class="val">12名<small>正社員 / 業務委託除く (2026年4月時点)</small></div></div>
+        <div class="info-row"><div class="key">本社所在地</div><div class="val">〒150-0001<br>東京都渋谷区神宮前 5-12-3 ルミオビル 4F</div></div>
+        <div class="info-row"><div class="key">事業内容</div><div class="val">クラウド基盤構築 / AI・データ活用支援 / 受託開発 / 技術顧問</div></div>
+        <div class="info-row"><div class="key">主要取引先</div><div class="val">金融・小売・物流・製造業ほか<small>守秘義務のため社名は控えさせていただきます</small></div></div>
+        <div class="info-row"><div class="key">認証・資格</div><div class="val">ISO/IEC 27001 (ISMS)<br>プライバシーマーク<br>AWS Advanced Tier Services Partner<br>Google Cloud Partner</div></div>
+        <div class="info-row"><div class="key">取引銀行</div><div class="val">三井住友銀行 / みずほ銀行 / GMOあおぞらネット銀行</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm" style="padding: 80px 0;">
+  <div class="container">
+    <div style="background: linear-gradient(135deg, #1f2330 0%, #2a3148 60%, #3f4567 100%); color:#fff; border-radius:28px; padding:64px; display:grid; grid-template-columns: 1.3fr 1fr; gap:40px; align-items:center; position:relative; overflow:hidden;">
+      <div>
+        <span class="eyebrow" style="color: rgba(255,255,255,0.55);">Let's talk</span>
+        <h2 style="margin-top:14px; font-size: clamp(28px, 3vw, 40px); font-weight:700; line-height:1.4;">あなたのチームに、<br>静かな前進を編みに行きます。</h2>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">
+        <%= link_to new_contact_path, class: "btn btn-primary", style: "background:#fff; color:var(--ink);" do %>問い合わせる →<% end %>
+        <%= link_to "サービス詳細", services_path, class: "btn btn-ghost", style: "color:#fff; border-color:rgba(255,255,255,0.3);" %>
+      </div>
+    </div>
+  </div>
+</section>

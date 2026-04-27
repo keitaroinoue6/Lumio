@@ -1,0 +1,558 @@
+<% content_for :title, "Lumio Inc." %>
+
+<% content_for :head do %>
+<style>
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  padding: 100px 0 130px;
+  overflow: hidden;
+}
+.hero .bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 50% at 80% 10%, #eaeefb 0%, transparent 60%),
+    radial-gradient(50% 45% at 10% 90%, #f4ebec 0%, transparent 60%),
+    radial-gradient(40% 35% at 50% 50%, #f7f1e2 0%, transparent 60%);
+  z-index: -1;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.hero h1 .accent { color: var(--accent-ink); }
+.hero h1 small {
+  display: block;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.hero .lede { margin-top: 28px; font-size: 17px; }
+.hero .ctas { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+.hero-side { display: flex; flex-direction: column; gap: 18px; }
+.hero-fig {
+  height: 380px;
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #eef3fa 0%, #f7eee4 60%, #efe7f1 100%);
+  border: 1px solid var(--line-2);
+}
+.hero-fig .orb { position: absolute; border-radius: 50%; filter: blur(0.5px); }
+.hero-fig .orb.a {
+  width: 220px; height: 220px; top: 28px; right: -30px;
+  background: radial-gradient(circle at 30% 30%, #fff, #c9d6ee 60%, #8fa6d3);
+  opacity: .85;
+}
+.hero-fig .orb.b {
+  width: 140px; height: 140px; bottom: 30px; left: 40px;
+  background: radial-gradient(circle at 35% 35%, #fff, #ead7c2 70%, #d4b08a);
+  opacity: .8;
+}
+.hero-fig .orb.c {
+  width: 90px; height: 90px; top: 180px; left: 180px;
+  background: radial-gradient(circle at 40% 40%, #fff, #d8c8e1 60%, #b39bc5);
+  opacity: .8;
+}
+.hero-fig .grid-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(31,35,48,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31,35,48,0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 50% 50%, #000, transparent 75%);
+}
+.hero-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.hero-meta .card { padding: 22px; background: rgba(255,255,255,0.7); border-radius: var(--radius); }
+.hero-meta .num { font-family: var(--font-en); font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+.hero-meta .lbl { font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+
+.scroll-hint {
+  position: absolute;
+  left: 28px; bottom: 28px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex; align-items: center; gap: 10px;
+}
+.scroll-hint .line { width: 40px; height: 1px; background: var(--ink-3); }
+
+/* ===== Marquee ===== */
+.marquee {
+  border-top: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line-2);
+  padding: 28px 0;
+  background: #fff;
+  overflow: hidden;
+}
+.marquee-row {
+  display: flex; gap: 56px; align-items: center;
+  white-space: nowrap;
+  animation: marquee-scroll 38s linear infinite;
+  font-family: var(--font-en);
+  color: var(--ink-3);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+.marquee-row span { display: inline-flex; align-items: center; gap: 14px; }
+.marquee-row .dot { background: var(--ink-4); }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ===== Services preview ===== */
+.services-section { background: var(--bg); }
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+.section-head .lede { margin-top: 16px; }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.svc-card {
+  background: #fff;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: flex; flex-direction: column; gap: 18px;
+  min-height: 320px;
+  transition: transform .25s ease, border-color .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.svc-card:hover { transform: translateY(-3px); border-color: var(--line); }
+.svc-card .num { font-family: var(--font-en); font-size: 12px; color: var(--ink-3); letter-spacing: 0.16em; }
+.svc-card h3 { font-size: 22px; font-weight: 700; }
+.svc-card p { color: var(--ink-2); font-size: 14.5px; line-height: 1.85; margin: 0; }
+.svc-card .glyph {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: grid; place-items: center;
+  margin-bottom: 8px;
+}
+.svc-card .glyph svg { width: 28px; height: 28px; }
+.svc-card .more {
+  margin-top: auto;
+  font-family: var(--font-en);
+  font-size: 13px;
+  color: var(--ink);
+  display: inline-flex; align-items: center; gap: 8px;
+  letter-spacing: 0.06em;
+}
+
+/* ===== Approach ===== */
+.approach { background: var(--bg-2); }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.step { display: flex; flex-direction: column; gap: 14px; }
+.step .pill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center; gap: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+.step h4 { font-size: 19px; font-weight: 700; line-height: 1.5; }
+.step p { color: var(--ink-2); font-size: 14px; line-height: 1.85; margin: 0; }
+.step .pill .dot { background: var(--accent); }
+
+/* ===== Cases ===== */
+.cases-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+.case-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  background: #fff;
+  display: flex; flex-direction: column;
+}
+.case-card .fig { height: 280px; border-radius: 0; border: 0; }
+.case-card.lg .fig { height: 380px; }
+.case-card .body { padding: 28px 30px 30px; }
+.case-card .meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.case-card h3 { font-size: 22px; font-weight: 700; line-height: 1.5; }
+.case-card.lg h3 { font-size: 26px; }
+.case-card p { color: var(--ink-2); font-size: 14px; margin-top: 10px; }
+.case-card .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-2);
+}
+.case-card .row span.label { font-family: var(--font-en); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-3); text-transform: uppercase; }
+.case-card .row strong { display: block; font-size: 15px; font-weight: 600; margin-top: 2px; }
+.cases-grid .col { display: flex; flex-direction: column; gap: 20px; }
+
+.fig-a { background: linear-gradient(140deg, #e9eef8 0%, #f0e7ee 100%); }
+.fig-b { background: linear-gradient(140deg, #f3ecdf 0%, #eaf1ec 100%); }
+.fig-c { background: linear-gradient(140deg, #efe7f1 0%, #e8edf6 100%); }
+.fig-with-mark { position: relative; }
+.fig-with-mark::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,.4), transparent 40%);
+}
+.fig-with-mark::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 18px; left: 22px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ===== Voices ===== */
+.voices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.voice {
+  background: #fff;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+.voice .quote-mark { font-family: var(--font-serif); font-size: 56px; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.voice p { color: var(--ink-2); font-size: 14.5px; line-height: 1.95; margin: 0 0 24px; }
+.voice .who { display: flex; gap: 14px; align-items: center; padding-top: 18px; border-top: 1px solid var(--line-2); }
+.voice .who .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--bg-blue), var(--bg-peach)); border: 1px solid var(--line); flex-shrink: 0; }
+.voice .who .name { font-size: 14px; font-weight: 600; }
+.voice .who .role { font-size: 12px; color: var(--ink-3); }
+
+/* ===== CTA strip ===== */
+.cta-strip {
+  background: linear-gradient(135deg, #1f2330 0%, #2a3148 60%, #3f4567 100%);
+  color: #fff;
+  border-radius: 28px;
+  padding: 72px 64px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-strip::before {
+  content: ""; position: absolute;
+  width: 480px; height: 480px; right: -120px; top: -180px;
+  background: radial-gradient(circle, rgba(180,200,240,0.25), transparent 60%);
+  pointer-events: none;
+}
+.cta-strip h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 700; line-height: 1.4; }
+.cta-strip p { color: rgba(255,255,255,0.7); font-size: 15px; margin-top: 14px; }
+.cta-strip .ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+.cta-strip .btn-primary { background: #fff; color: var(--ink); }
+.cta-strip .btn-primary:hover { background: #f6f4ee; }
+.cta-strip .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.3); }
+.cta-strip .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+@media (max-width: 980px) {
+  .hero-grid, .section-head, .cases-grid, .cta-strip { grid-template-columns: 1fr; }
+  .svc-grid, .voices { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .cta-strip { padding: 48px 32px; }
+  .cta-strip .ctas { justify-content: flex-start; }
+}
+</style>
+<% end %>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="bg"></div>
+  <div class="container hero-grid">
+    <div>
+      <h1 class="h-display">
+        <small>Technology, gently engineered.</small>
+        テクノロジーで、<br>
+        <span class="accent">静かな前進</span>を。
+      </h1>
+      <p class="lede">
+        私たちLumioは、クラウド・AI・受託開発を通じて、企業の成長をやさしく後押しするテクノロジーパートナーです。声高な革新ではなく、現場に馴染む設計で、確かな前進を。
+      </p>
+      <div class="ctas">
+        <%= link_to services_path, class: "btn btn-primary" do %>
+          サービスを見る
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        <% end %>
+        <%= link_to "会社について", about_path, class: "btn btn-ghost" %>
+      </div>
+    </div>
+
+    <div class="hero-side">
+      <div class="hero-fig">
+        <div class="grid-lines"></div>
+        <div class="orb a"></div>
+        <div class="orb b"></div>
+        <div class="orb c"></div>
+      </div>
+      <div class="hero-meta">
+        <div class="card">
+          <div class="num">120<span style="font-size:18px;color:var(--ink-3);">+</span></div>
+          <div class="lbl">プロジェクト納品実績</div>
+        </div>
+        <div class="card">
+          <div class="num">14<span style="font-size:18px;color:var(--ink-3);">年</span></div>
+          <div class="lbl">創業からの歩み</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container scroll-hint"><span class="line"></span>SCROLL</div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-row">
+    <span>AWS Advanced Partner</span><span class="dot"></span>
+    <span>Google Cloud</span><span class="dot"></span>
+    <span>Microsoft Azure</span><span class="dot"></span>
+    <span>ISMS / ISO 27001</span><span class="dot"></span>
+    <span>プライバシーマーク</span><span class="dot"></span>
+    <span>Snowflake Select</span><span class="dot"></span>
+    <span>Databricks</span><span class="dot"></span>
+    <span>HubSpot Solutions</span><span class="dot"></span>
+    <span>AWS Advanced Partner</span><span class="dot"></span>
+    <span>Google Cloud</span><span class="dot"></span>
+    <span>Microsoft Azure</span><span class="dot"></span>
+    <span>ISMS / ISO 27001</span><span class="dot"></span>
+    <span>プライバシーマーク</span><span class="dot"></span>
+    <span>Snowflake Select</span><span class="dot"></span>
+    <span>Databricks</span><span class="dot"></span>
+    <span>HubSpot Solutions</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ===== SERVICES ===== -->
+<section class="section services-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Services</span>
+        <h2 class="h-section" style="margin-top:18px;">3つの軸で、<br>事業の解像度を上げる。</h2>
+      </div>
+      <p class="lede">
+        クラウド基盤の構築から、AIを用いた業務最適化、内製を見据えた受託開発まで。お客様の現場と地続きで、長く続く仕組みをご一緒します。
+      </p>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="glyph" style="background: var(--bg-blue);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3f5a93" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19a4.5 4.5 0 1 0-1-8.9A6 6 0 0 0 4.6 13.4 4 4 0 0 0 6 21h11.5z"/>
+          </svg>
+        </div>
+        <span class="num">01 / Cloud</span>
+        <h3>クラウド基盤構築</h3>
+        <p>AWS・GCP・Azureを横断したインフラ設計と運用。スケールしてもコストが暴れない、芯のある基盤を。</p>
+        <%= link_to services_path, class: "more en" do %>Learn more →<% end %>
+      </div>
+
+      <div class="svc-card">
+        <div class="glyph" style="background: var(--bg-mint);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5a7a64" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>
+          </svg>
+        </div>
+        <span class="num">02 / AI</span>
+        <h3>AI・データ活用</h3>
+        <p>生成AIの実装から、データ基盤の設計まで。"使われる仕組み"にするための、現場との対話を大切にします。</p>
+        <%= link_to services_path, class: "more en" do %>Learn more →<% end %>
+      </div>
+
+      <div class="svc-card">
+        <div class="glyph" style="background: var(--bg-lavender);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7e6494" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m8 6-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/>
+          </svg>
+        </div>
+        <span class="num">03 / Build</span>
+        <h3>受託開発</h3>
+        <p>Webアプリ・業務システム・モバイル。要件定義から内製化支援まで、引き渡したあとも続く設計を。</p>
+        <%= link_to services_path, class: "more en" do %>Learn more →<% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPROACH ===== -->
+<section class="section approach">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Approach</span>
+        <h2 class="h-section" style="margin-top:18px;">小さく始めて、確かに育てる。</h2>
+      </div>
+      <p class="lede">
+        私たちは"作って終わり"を作りません。事業に寄り添い、運用と改善まで含めた4つのフェーズで、ゆるやかに、でも確実に前進を重ねます。
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="pill"><span class="dot"></span>01 — Listen</span>
+        <h4>傾聴と整理</h4>
+        <p>まずは事業背景と現場の声を丁寧に。本当に解くべき問いを、一緒に絞り込みます。</p>
+      </div>
+      <div class="step">
+        <span class="pill"><span class="dot"></span>02 — Sketch</span>
+        <h4>設計とプロト</h4>
+        <p>軽い試作で確かめながら、方針を固めます。捨てる勇気も、設計の一部として。</p>
+      </div>
+      <div class="step">
+        <span class="pill"><span class="dot"></span>03 — Build</span>
+        <h4>開発と検証</h4>
+        <p>少人数の専任チームで、リズムよく開発。レビューと検証を密に重ねます。</p>
+      </div>
+      <div class="step">
+        <span class="pill"><span class="dot"></span>04 — Tend</span>
+        <h4>運用と改善</h4>
+        <p>納品後も伴走。データを見ながら、暮らしのように手入れを続けていきます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CASES ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Selected Work</span>
+        <h2 class="h-section" style="margin-top:18px;">最近の取り組み</h2>
+      </div>
+      <p class="lede">
+        守秘義務の範囲で、実際のプロジェクトの一部をご紹介します。業界・規模を問わず、地に足のついた仕事を。
+      </p>
+    </div>
+
+    <div class="cases-grid">
+      <div class="case-card lg">
+        <div class="fig figure-ph fig-a fig-with-mark" data-label="CASE 01 — FINANCE"></div>
+        <div class="body">
+          <div class="meta-row">
+            <span class="tag">Cloud Migration</span>
+            <span class="tag">SRE</span>
+            <span class="tag">Cost -38%</span>
+          </div>
+          <h3>地方銀行の勘定系周辺システムを、ハイブリッドクラウドへ。</h3>
+          <p>レガシーバッチの段階的解体と、運用コスト最適化。年間38%のコスト削減と、夜間運用の自動化を実現。</p>
+          <div class="row">
+            <div><span class="label">Client</span><strong>A. Regional Bank</strong></div>
+            <div><span class="label">Year</span><strong>2025</strong></div>
+            <a href="#" class="btn btn-ghost" style="padding:10px 16px;">View →</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="case-card">
+          <div class="fig figure-ph fig-b fig-with-mark" data-label="CASE 02 — RETAIL"></div>
+          <div class="body">
+            <div class="meta-row">
+              <span class="tag">Generative AI</span>
+              <span class="tag">CX</span>
+            </div>
+            <h3>接客の質を底上げする、社内AIアシスタント。</h3>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="fig figure-ph fig-c fig-with-mark" data-label="CASE 03 — LOGISTICS"></div>
+          <div class="body">
+            <div class="meta-row">
+              <span class="tag">IoT</span>
+              <span class="tag">Dashboard</span>
+            </div>
+            <h3>配送現場の声から作った、運行管理ダッシュボード。</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VOICES ===== -->
+<section class="section" style="background: var(--bg-2);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Voices</span>
+        <h2 class="h-section" style="margin-top:18px;">お客様の声</h2>
+      </div>
+      <p class="lede">プロジェクトの伴走を経て、お客様からいただいたコメントの一部です。</p>
+    </div>
+
+    <div class="voices">
+      <div class="voice">
+        <div class="quote-mark">"</div>
+        <p>提案のたびに「現場の運用に馴染むか」を一緒に考えてくれる姿勢が印象的でした。導入後の定着まで、本当に滑らかでした。</p>
+        <div class="who">
+          <div class="avatar"></div>
+          <div>
+            <div class="name">M. 田中 様</div>
+            <div class="role">製造業 / 情報システム部長</div>
+          </div>
+        </div>
+      </div>
+      <div class="voice">
+        <div class="quote-mark">"</div>
+        <p>派手さはないけれど、議論が誠実。捨てる選択肢も含めて、本当に必要なものを整理してくれました。</p>
+        <div class="who">
+          <div class="avatar"></div>
+          <div>
+            <div class="name">S. 佐藤 様</div>
+            <div class="role">小売 / DX推進室</div>
+          </div>
+        </div>
+      </div>
+      <div class="voice">
+        <div class="quote-mark">"</div>
+        <p>運用フェーズに入ってからの伴走が想像以上でした。社内に技術が残るような関わり方をしてくれます。</p>
+        <div class="who">
+          <div class="avatar"></div>
+          <div>
+            <div class="name">K. 鈴木 様</div>
+            <div class="role">物流 / 経営企画</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-strip">
+      <div>
+        <span class="eyebrow" style="color: rgba(255,255,255,0.55);">Let's talk</span>
+        <h2 style="margin-top:14px;">小さなご相談から、お気軽に。<br>30分のオンライン無料相談を承ります。</h2>
+        <p>「何から始めるべきか」だけでも構いません。話すうちに、輪郭が見えてきます。</p>
+      </div>
+      <div class="ctas">
+        <%= link_to new_contact_path, class: "btn btn-primary" do %>
+          問い合わせる
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        <% end %>
+        <%= link_to "サービス詳細", services_path, class: "btn btn-ghost" %>
+      </div>
+    </div>
+  </div>
+</section>

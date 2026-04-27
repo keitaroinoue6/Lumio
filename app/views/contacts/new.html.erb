@@ -1,0 +1,342 @@
+<% content_for :title, "お問い合わせ" %>
+
+<% content_for :head do %>
+<style>
+.contact-hero {
+  padding: 90px 0 60px;
+  background:
+    radial-gradient(50% 50% at 80% 20%, #eef3fa 0%, transparent 60%),
+    radial-gradient(40% 40% at 10% 90%, #fbeee6 0%, transparent 60%),
+    var(--bg);
+}
+.contact-hero .breadcrumb { display: flex; gap: 8px; align-items: center; font-family: var(--font-en); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 28px; }
+.contact-hero h1 { font-size: clamp(40px, 5vw, 60px); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; max-width: 18ch; }
+.contact-hero .lede { margin-top: 24px; font-size: 17px; }
+
+.contact-main { padding: 80px 0 120px; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 70px; align-items: start; }
+
+.info-card { background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 36px; position: sticky; top: 96px; }
+.info-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.info-card p { color: var(--ink-2); font-size: 14px; line-height: 1.9; margin: 0 0 26px; }
+.contact-rows { display: flex; flex-direction: column; }
+.contact-row { padding: 20px 0; border-top: 1px solid var(--line-2); display: grid; grid-template-columns: 36px 1fr; gap: 16px; align-items: start; }
+.contact-row:last-of-type { border-bottom: 1px solid var(--line-2); }
+.contact-row .icon { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-blue); display: grid; place-items: center; }
+.contact-row.r2 .icon { background: var(--bg-mint); }
+.contact-row.r3 .icon { background: var(--bg-lavender); }
+.contact-row.r4 .icon { background: var(--bg-peach); }
+.contact-row .icon svg { width: 16px; height: 16px; }
+.contact-row .lbl { font-family: var(--font-en); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-3); text-transform: uppercase; }
+.contact-row .val { font-size: 15px; color: var(--ink); margin-top: 2px; }
+.contact-row .sub { color: var(--ink-3); font-size: 12px; margin-top: 2px; }
+
+.response-meta { margin-top: 28px; padding: 18px 22px; background: var(--bg-2); border-radius: var(--radius); display: flex; gap: 14px; align-items: center; }
+.response-meta .pulse { width: 10px; height: 10px; border-radius: 50%; background: #8aa885; position: relative; flex-shrink: 0; }
+.response-meta .pulse::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 1.5px solid #8aa885; opacity: 0.4; animation: ping 2s ease-out infinite; }
+@keyframes ping { 0% { transform: scale(0.6); opacity: 0.6; } 100% { transform: scale(1.4); opacity: 0; } }
+.response-meta .txt { font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+.response-meta .txt strong { color: var(--ink); }
+
+.form-card { background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 48px; }
+.form-step { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 12px; }
+.form-card h2 { font-size: 28px; font-weight: 700; line-height: 1.4; margin-bottom: 14px; }
+.form-card .intro { color: var(--ink-2); font-size: 14.5px; line-height: 1.85; margin: 0 0 36px; }
+
+.form-section { margin-top: 36px; padding-top: 36px; border-top: 1px solid var(--line-2); }
+.form-section:first-of-type { padding-top: 0; border-top: 0; margin-top: 0; }
+.form-section .section-num { font-family: var(--font-en); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-4); text-transform: uppercase; margin-bottom: 8px; }
+.form-section h3 { font-size: 17px; font-weight: 600; margin-bottom: 22px; }
+
+.field { margin-bottom: 22px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; letter-spacing: 0.02em; }
+.field label .req { display: inline-block; font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: #b95151; margin-left: 6px; vertical-align: 2px; }
+.field label .opt { display: inline-block; font-family: var(--font-en); font-size: 10px; letter-spacing: 0.1em; color: var(--ink-4); margin-left: 6px; vertical-align: 2px; text-transform: uppercase; }
+.field .help { font-size: 12px; color: var(--ink-3); margin-top: 6px; line-height: 1.7; }
+
+.f-input, .f-textarea, .f-select {
+  width: 100%; padding: 13px 16px; font-family: inherit; font-size: 15px;
+  color: var(--ink); background: #fbfaf6; border: 1px solid var(--line);
+  border-radius: var(--radius); transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  letter-spacing: 0.02em;
+}
+.f-input:hover, .f-textarea:hover, .f-select:hover { border-color: #d0ccc1; }
+.f-input:focus, .f-textarea:focus, .f-select:focus { outline: none; border-color: var(--accent-ink); background: #fff; box-shadow: 0 0 0 4px rgba(107,140,206,0.12); }
+.f-textarea { min-height: 160px; resize: vertical; line-height: 1.8; }
+.f-select { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1L6 6L11 1' stroke='%236b7180' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>"); background-repeat: no-repeat; background-position: right 18px center; padding-right: 44px; }
+
+.topic-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.topic input[type="radio"] { display: none; }
+.topic label { display: flex; align-items: flex-start; gap: 12px; padding: 16px 18px; background: #fbfaf6; border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer; transition: all .15s ease; margin: 0; font-weight: 500; }
+.topic label .dot-rb { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--ink-4); flex-shrink: 0; margin-top: 3px; position: relative; transition: all .15s ease; }
+.topic label .dot-rb::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity .15s ease; }
+.topic label:hover { border-color: #d0ccc1; background: #fff; }
+.topic input:checked + label { border-color: var(--accent-ink); background: linear-gradient(180deg, #f6f9ff, #fff); box-shadow: 0 0 0 3px rgba(107,140,206,0.1); }
+.topic input:checked + label .dot-rb { border-color: var(--accent); }
+.topic input:checked + label .dot-rb::after { opacity: 1; }
+.topic label .topic-body .nm { font-size: 14px; font-weight: 600; }
+.topic label .topic-body .desc { font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.6; font-weight: 400; }
+
+.pill-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill input[type="radio"] { display: none; }
+.pill label { display: inline-flex; align-items: center; padding: 9px 16px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: #fbfaf6; font-size: 13px; cursor: pointer; font-family: var(--font-en); letter-spacing: 0.02em; transition: all .15s ease; margin: 0; color: var(--ink-2); }
+.pill label:hover { border-color: #d0ccc1; background: #fff; }
+.pill input:checked + label { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.f-checkbox { display: flex; gap: 12px; align-items: flex-start; padding: 16px; background: var(--bg-2); border-radius: var(--radius); }
+.f-checkbox input[type="checkbox"] { display: none; }
+.f-checkbox .box { width: 18px; height: 18px; border: 1.5px solid var(--ink-4); border-radius: 4px; flex-shrink: 0; margin-top: 2px; position: relative; cursor: pointer; transition: all .15s ease; background: #fff; }
+.f-checkbox input:checked + .box { background: var(--ink); border-color: var(--ink); }
+.f-checkbox input:checked + .box::after { content: ""; position: absolute; left: 5px; top: 1px; width: 5px; height: 10px; border: solid #fff; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+.f-checkbox .txt { font-size: 13px; color: var(--ink-2); line-height: 1.75; cursor: pointer; }
+.f-checkbox .txt a { color: var(--accent-ink); border-bottom: 1px solid var(--accent-ink); }
+
+.submit-row { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line-2); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.submit-row .note { font-size: 12px; color: var(--ink-3); max-width: 32ch; line-height: 1.7; }
+.btn-submit { display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; font-size: 14px; font-weight: 600; background: var(--ink); color: #fff; border: 0; border-radius: var(--radius-pill); letter-spacing: 0.06em; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.btn-submit:hover { background: #2f3445; transform: translateY(-1px); }
+.btn-submit svg { width: 18px; height: 18px; transition: transform .15s ease; }
+.btn-submit:hover svg { transform: translateX(3px); }
+
+.error-box { background: #fef2f2; border: 1px solid #fca5a5; border-radius: var(--radius); padding: 16px 20px; margin-bottom: 28px; font-size: 13px; color: #b91c1c; }
+.error-box ul { margin: 6px 0 0 18px; padding: 0; }
+
+.alt-contact { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 80px; }
+.alt-card { padding: 28px 26px; background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 12px; transition: all .2s ease; }
+.alt-card:hover { border-color: var(--line); transform: translateY(-2px); }
+.alt-card .ic { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 4px; }
+.alt-card.a .ic { background: var(--bg-blue); }
+.alt-card.b .ic { background: var(--bg-mint); }
+.alt-card.c .ic { background: var(--bg-lavender); }
+.alt-card .ic svg { width: 18px; height: 18px; }
+.alt-card h4 { font-size: 16px; font-weight: 600; }
+.alt-card p { color: var(--ink-2); font-size: 13px; line-height: 1.8; margin: 0; flex: 1; }
+.alt-card .more { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.06em; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
+
+@media (max-width: 980px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .info-card { position: static; }
+  .topic-grid { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; }
+  .form-card { padding: 32px 24px; }
+  .alt-contact { grid-template-columns: 1fr; }
+}
+</style>
+<% end %>
+
+<section class="contact-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <%= link_to "Home", root_path %><span>/</span><span style="color:var(--ink);">Contact</span>
+    </div>
+    <h1>まずは、30分の<br>対話から。</h1>
+    <p class="lede">"何から始めるべきか" だけでも構いません。フォームへのご記入はおおむね2分。担当者より2営業日以内にご返信いたします。</p>
+  </div>
+</section>
+
+<section class="contact-main">
+  <div class="container">
+    <div class="contact-grid" id="form">
+
+      <aside class="info-card">
+        <h3>直接ご連絡も歓迎です</h3>
+        <p>フォーム以外でも、メール・お電話・オンライン面談で承っております。お急ぎの場合はお電話が確実です。</p>
+        <div class="contact-rows">
+          <div class="contact-row r1">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3f5a93" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+            <div><div class="lbl">Email</div><div class="val">hello@lumio.co.jp</div><div class="sub">24時間受付 / 通常2営業日以内に返信</div></div>
+          </div>
+          <div class="contact-row r2">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#5a7a64" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3.08a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="lbl">Phone</div><div class="val">03-5XXX-XXXX</div><div class="sub">平日 10:00 - 18:00</div></div>
+          </div>
+          <div class="contact-row r3">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7e6494" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+            <div><div class="lbl">Online Meeting</div><div class="val">30分の無料相談</div><div class="sub">Google Meet / Zoom / Teams 対応</div></div>
+          </div>
+          <div class="contact-row r4">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#a47457" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="lbl">Office</div><div class="val">東京都渋谷区神宮前 5-12-3<br>ルミオビル 4F</div><div class="sub">表参道駅 A2出口より徒歩5分</div></div>
+          </div>
+        </div>
+        <div class="response-meta">
+          <span class="pulse"></span>
+          <span class="txt">現在 <strong>新規ご相談を承っております</strong>。<br>2026年5月以降の着手枠 残2件。</span>
+        </div>
+      </aside>
+
+      <div class="form-card">
+        <div class="form-step">Inquiry Form / 01 — Tell us about your project</div>
+        <h2>プロジェクトについて、<br>少しだけ教えてください。</h2>
+        <p class="intro">記入は2分ほど。"まだ整理しきれていない" という段階でも問題ありません。むしろ、整理する前の段階こそご一緒できればと思っています。</p>
+
+        <% if @contact.errors.any? %>
+          <div class="error-box">
+            入力内容をご確認ください
+            <ul>
+              <% @contact.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form_with model: @contact, url: contacts_path do |f| %>
+
+          <%# 01 TOPIC %>
+          <div class="form-section">
+            <div class="section-num">01 — Topic</div>
+            <h3>ご相談内容のテーマ <span style="font-family:var(--font-en);font-size:10px;font-weight:600;letter-spacing:0.1em;color:#b95151;margin-left:6px;">必須</span></h3>
+            <div class="topic-grid">
+              <% [
+                { value: "cloud",   label: "クラウド基盤",    desc: "移行・構築・コスト最適化・運用" },
+                { value: "ai",      label: "AI・データ活用",  desc: "生成AI / データ基盤 / PoC" },
+                { value: "build",   label: "受託開発",        desc: "Web / 業務システム / モバイル" },
+                { value: "consult", label: "技術顧問・その他", desc: "CTO代行 / DD / 採用支援" }
+              ].each_with_index do |opt, i| %>
+                <div class="topic">
+                  <%= f.radio_button :topic, opt[:value], id: "t#{i+1}" %>
+                  <label for="t<%= i+1 %>">
+                    <span class="dot-rb"></span>
+                    <span class="topic-body">
+                      <span class="nm"><%= opt[:label] %></span>
+                      <span class="desc"><%= opt[:desc] %></span>
+                    </span>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <%# 02 ABOUT YOU %>
+          <div class="form-section">
+            <div class="section-num">02 — About you</div>
+            <h3>ご担当者様について</h3>
+            <div class="field-row">
+              <div class="field">
+                <label>会社名 <span class="req">必須</span></label>
+                <%= f.text_field :company, class: "f-input", placeholder: "株式会社○○○" %>
+              </div>
+              <div class="field">
+                <label>業種 <span class="opt">任意</span></label>
+                <%= f.select :industry, [
+                  ["選択してください", ""],
+                  ["金融・保険"], ["小売・EC"], ["製造業"], ["物流・運輸"],
+                  ["医療・ヘルスケア"], ["不動産・建設"], ["メディア・広告"],
+                  ["教育"], ["SaaS・IT"], ["その他"]
+                ], {}, class: "f-select" %>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>お名前 <span class="req">必須</span></label>
+                <%= f.text_field :name, class: "f-input", placeholder: "山田 太郎" %>
+              </div>
+              <div class="field">
+                <label>部署・役職 <span class="opt">任意</span></label>
+                <%= f.text_field :department, class: "f-input", placeholder: "DX推進室 マネージャー" %>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>メールアドレス <span class="req">必須</span></label>
+                <%= f.email_field :email, class: "f-input", placeholder: "taro@example.co.jp" %>
+              </div>
+              <div class="field">
+                <label>電話番号 <span class="opt">任意</span></label>
+                <%= f.tel_field :phone, class: "f-input", placeholder: "03-XXXX-XXXX" %>
+              </div>
+            </div>
+          </div>
+
+          <%# 03 PROJECT %>
+          <div class="form-section">
+            <div class="section-num">03 — Project</div>
+            <h3>プロジェクトの輪郭</h3>
+            <div class="field">
+              <label>想定ご予算 <span class="opt">任意</span></label>
+              <div class="pill-grid">
+                <% [
+                  ["~ 100万円", "under_1m"],
+                  ["100 - 500万円", "1m_5m"],
+                  ["500万 - 1,500万円", "5m_15m"],
+                  ["1,500 - 5,000万円", "15m_50m"],
+                  ["5,000万円 〜", "over_50m"],
+                  ["未定 / 相談したい", "undecided"]
+                ].each do |label, value| %>
+                  <div class="pill">
+                    <%= f.radio_button :budget, value, id: "b_#{value}" %>
+                    <label for="b_<%= value %>"><%= label %></label>
+                  </div>
+                <% end %>
+              </div>
+              <p class="help">予算規模に合わせた最適なプランをご提案します。未定でも構いません。</p>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>希望開始時期 <span class="opt">任意</span></label>
+                <%= f.select :start_date, [
+                  ["選択してください", ""],
+                  ["すぐにでも (1ヶ月以内)"], ["1〜3ヶ月以内"], ["3〜6ヶ月以内"],
+                  ["半年以降"], ["未定 / 相談したい"]
+                ], {}, class: "f-select" %>
+              </div>
+              <div class="field">
+                <label>関わり方の希望 <span class="opt">任意</span></label>
+                <%= f.select :engagement, [
+                  ["選択してください", ""],
+                  ["Spot — 単発・短期"], ["Build — 専任チーム編成"],
+                  ["Advisor — 継続技術顧問"], ["未定 / 相談したい"]
+                ], {}, class: "f-select" %>
+              </div>
+            </div>
+            <div class="field">
+              <label>ご相談内容の詳細 <span class="req">必須</span></label>
+              <%= f.text_area :detail, class: "f-textarea", placeholder: "背景や課題感、現在の状況、達成したいこと、すでに検討中の方向性などをお聞かせください。整理しきれていない段階でも構いません。" %>
+              <p class="help">事業背景や"うまくいっていないこと"も含めて率直に書いていただけると、より具体的なご提案が可能です。</p>
+            </div>
+          </div>
+
+          <%# 04 CONSENT %>
+          <div class="form-section">
+            <div class="section-num">04 — Consent</div>
+            <h3>送信前のご確認</h3>
+            <label class="f-checkbox">
+              <%= f.check_box :consent, id: "consent" %>
+              <span class="box" onclick="document.getElementById('consent').click()"></span>
+              <span class="txt">プライバシーポリシー および 情報の取り扱いについて に同意します。お預かりした情報は、ご相談対応のためのみに使用いたします。</span>
+            </label>
+          </div>
+
+          <div class="submit-row">
+            <p class="note">送信後、自動返信メールをお送りします。担当者からの返信は2営業日以内を目安としています。</p>
+            <%= f.submit "送信する", class: "btn-submit" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+
+    <div class="alt-contact">
+      <div class="alt-card a">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3f5a93" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4>採用に関するお問い合わせ</h4>
+        <p>エンジニア・デザイナーの採用情報、カジュアル面談のお申し込みはこちらから。</p>
+        <span class="more">careers@lumio.co.jp →</span>
+      </div>
+      <div class="alt-card b">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#5a7a64" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <h4>取材・登壇のご依頼</h4>
+        <p>メディアからの取材、勉強会・カンファレンスでの登壇依頼を承っております。</p>
+        <span class="more">press@lumio.co.jp →</span>
+      </div>
+      <div class="alt-card c">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#7e6494" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></div>
+        <h4>既存のお客様サポート</h4>
+        <p>運用中のシステムに関するお問い合わせ、緊急対応のご連絡先はこちらです。</p>
+        <span class="more">support@lumio.co.jp →</span>
+      </div>
+    </div>
+  </div>
+</section>
