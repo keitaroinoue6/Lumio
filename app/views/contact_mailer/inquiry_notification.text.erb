@@ -1,0 +1,16 @@
+新しいお問い合わせが届きました
+================================
+
+お問い合わせ種別: <%= @contact.topic %>
+会社名:         <%= @contact.company %>
+業種:           <%= @contact.industry %>
+お名前:         <%= @contact.name %>
+部署名:         <%= @contact.department %>
+メールアドレス: <%= @contact.email %>
+電話番号:       <%= @contact.phone %>
+ご予算:         <%= @contact.budget %>
+導入希望時期:   <%= @contact.start_date %>
+契約形態:       <%= @contact.engagement %>
+
+【お問い合わせ内容】
+<%= @contact.detail %>
