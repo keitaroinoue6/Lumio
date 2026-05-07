@@ -16,7 +16,9 @@ x-common-environment: &common-environment
 services:
   app:
     container_name: myapp-app
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     environment:
@@ -35,7 +37,9 @@ services:
 
   tailwindcss:
     container_name: myapp-tailwindcss
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     networks:
       - myapp_network
     volumes:
