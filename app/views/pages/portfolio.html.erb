@@ -1,0 +1,89 @@
+<% content_for :title, "Portfolio" %>
+<% content_for :description, "制作実績の入り口ページです。各プロジェクトのLPやコーポレートサイトに遷移できます。" %>
+
+<% content_for :head do %>
+<style>
+.portfolio {
+  padding: 96px 0 110px;
+  background:
+    radial-gradient(55% 50% at 90% 10%, #eaeefb 0%, transparent 65%),
+    radial-gradient(45% 45% at 10% 90%, #f4ebec 0%, transparent 65%),
+    var(--bg);
+}
+.portfolio h1 {
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+}
+.portfolio .lede {
+  margin-top: 22px;
+  max-width: 62ch;
+}
+.works-grid {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  padding: 28px;
+}
+.work-card .eyebrow {
+  margin: 0;
+}
+.work-card h2 {
+  font-size: 24px;
+  line-height: 1.45;
+}
+.work-card p {
+  color: var(--ink-2);
+  margin: 0;
+}
+.work-card .actions {
+  margin-top: auto;
+}
+
+@media (max-width: 980px) {
+  .works-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+<% end %>
+
+<section class="portfolio">
+  <div class="container">
+    <span class="eyebrow">Portfolio</span>
+    <h1 style="margin-top: 16px;">制作実績一覧</h1>
+    <p class="lede">
+      トップページから各実績ページへ遷移できます。まずは仮の導線として、
+      現在のITコーポレートサイトに移動できるようにしています。
+    </p>
+
+    <div class="works-grid">
+      <article class="work-card">
+        <span class="eyebrow">Work 01</span>
+        <h2>ITコーポレートサイト</h2>
+        <p>現在のコーポレートサイトデザインです。会社概要・サービス・お問い合わせ導線を含みます。</p>
+        <div class="actions">
+          <%= link_to it_corporate_path, class: "btn btn-primary" do %>
+            サイトを見る
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          <% end %>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <span class="eyebrow">Work 02</span>
+        <h2>レンタカーLP（準備中）</h2>
+        <p>こちらは次に追加する実績枠です。後で `/renta-car` を追加すればこのカードから遷移できます。</p>
+      </article>
+    </div>
+  </div>
+</section>

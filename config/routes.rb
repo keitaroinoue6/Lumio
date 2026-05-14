@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   root "pages#home"
+  get "it-corporate", to: "pages#it_corporate", as: :it_corporate
   get "about",    to: "pages#about",    as: :about
   get "services", to: "pages#services", as: :services
 

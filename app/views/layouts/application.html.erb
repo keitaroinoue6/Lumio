@@ -20,20 +20,22 @@
 
   <body>
 
-    <header class="site-header">
-      <div class="container row">
-        <%= link_to root_path, class: "brand" do %>
-          <span class="mark"></span>LUMIO
-        <% end %>
-        <nav class="nav">
-          <%= link_to "トップ",         root_path,        class: current_page?(root_path)     ? "active" : "" %>
-          <%= link_to "サービス",       services_path,    class: current_page?(services_path) ? "active" : "" %>
-          <%= link_to "会社概要",       about_path,       class: current_page?(about_path)    ? "active" : "" %>
-          <%= link_to "お問い合わせ",   new_contact_path, class: current_page?(new_contact_path) ? "active" : "" %>
-          <%= link_to "無料相談 →",     new_contact_path, class: "cta" %>
-        </nav>
-      </div>
-    </header>
+    <% unless current_page?(root_path) %>
+      <header class="site-header">
+        <div class="container row">
+          <%= link_to it_corporate_path, class: "brand" do %>
+            <span class="mark"></span>LUMIO
+          <% end %>
+          <nav class="nav">
+            <%= link_to "トップ",         it_corporate_path, class: current_page?(it_corporate_path) ? "active" : "" %>
+            <%= link_to "サービス",       services_path,     class: current_page?(services_path)     ? "active" : "" %>
+            <%= link_to "会社概要",       about_path,        class: current_page?(about_path)        ? "active" : "" %>
+            <%= link_to "お問い合わせ",   new_contact_path,  class: current_page?(new_contact_path)  ? "active" : "" %>
+            <%= link_to "制作実績に戻る →",     root_path,  class: "cta" %>
+          </nav>
+        </div>
+      </header>
+    <% end %>
 
     <% if notice.present? %>
       <div style="position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;background:#ecf4f0;border:1px solid #b6c8a8;color:#3a3f4d;padding:12px 24px;border-radius:var(--radius-pill);font-size:14px;white-space:nowrap;box-shadow:var(--shadow);">
