@@ -20,20 +20,22 @@
 
   <body>
 
-    <header class="site-header">
-      <div class="container row">
-        <%= link_to root_path, class: "brand" do %>
-          <span class="mark"></span>LUMIO
-        <% end %>
-        <nav class="nav">
-          <%= link_to "トップ",         root_path,        class: current_page?(root_path)     ? "active" : "" %>
-          <%= link_to "サービス",       services_path,    class: current_page?(services_path) ? "active" : "" %>
-          <%= link_to "会社概要",       about_path,       class: current_page?(about_path)    ? "active" : "" %>
-          <%= link_to "お問い合わせ",   new_contact_path, class: current_page?(new_contact_path) ? "active" : "" %>
-          <%= link_to "無料相談 →",     new_contact_path, class: "cta" %>
-        </nav>
-      </div>
-    </header>
+    <% unless current_page?(root_path) || current_page?(renta_car_path) %>
+      <header class="site-header">
+        <div class="container row">
+          <%= link_to it_corporate_path, class: "brand" do %>
+            <span class="mark"></span>LUMIO
+          <% end %>
+          <nav class="nav">
+            <%= link_to "トップ",         it_corporate_path, class: current_page?(it_corporate_path) ? "active" : "" %>
+            <%= link_to "サービス",       services_path,     class: current_page?(services_path)     ? "active" : "" %>
+            <%= link_to "会社概要",       about_path,        class: current_page?(about_path)        ? "active" : "" %>
+            <%= link_to "お問い合わせ",   new_contact_path,  class: current_page?(new_contact_path)  ? "active" : "" %>
+            <%= link_to "制作実績に戻る →",     root_path,  class: "cta" %>
+          </nav>
+        </div>
+      </header>
+    <% end %>
 
     <% if notice.present? %>
       <div style="position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;background:#ecf4f0;border:1px solid #b6c8a8;color:#3a3f4d;padding:12px 24px;border-radius:var(--radius-pill);font-size:14px;white-space:nowrap;box-shadow:var(--shadow);">
@@ -50,51 +52,53 @@
       <%= yield %>
     </main>
 
-    <footer class="site-footer">
-      <div class="container">
-        <div class="grid">
-          <div>
-            <%= link_to root_path, class: "brand" do %>
-              <span class="mark"></span>LUMIO
-            <% end %>
-            <p style="margin-top:18px;color:var(--ink-2);font-size:14px;line-height:1.9;max-width:36ch;">
-              Lumio Inc. — テクノロジーで、静かな前進を。<br>
-              東京都渋谷区神宮前 5-12-3 ルミオビル 4F
-            </p>
+    <% unless current_page?(root_path) || current_page?(renta_car_path) %>
+      <footer class="site-footer">
+        <div class="container">
+          <div class="grid">
+            <div>
+              <%= link_to root_path, class: "brand" do %>
+                <span class="mark"></span>LUMIO
+              <% end %>
+              <p style="margin-top:18px;color:var(--ink-2);font-size:14px;line-height:1.9;max-width:36ch;">
+                Lumio Inc. — テクノロジーで、静かな前進を。<br>
+                東京都渋谷区神宮前 5-12-3 ルミオビル 4F
+              </p>
+            </div>
+            <div>
+              <h5>Sitemap</h5>
+              <ul>
+                <li><%= link_to "トップ",         root_path %></li>
+                <li><%= link_to "サービス",       services_path %></li>
+                <li><%= link_to "会社概要",       about_path %></li>
+                <li><%= link_to "お問い合わせ",   new_contact_path %></li>
+              </ul>
+            </div>
+            <div>
+              <h5>Services</h5>
+              <ul>
+                <li><%= link_to "クラウド基盤", services_path %></li>
+                <li><%= link_to "AI・データ",   services_path %></li>
+                <li><%= link_to "受託開発",     services_path %></li>
+                <li><%= link_to "技術顧問",     services_path %></li>
+              </ul>
+            </div>
+            <div>
+              <h5>Contact</h5>
+              <ul>
+                <li>hello@lumio.co.jp</li>
+                <li>03-5XXX-XXXX</li>
+                <li>平日 10:00 - 18:00</li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h5>Sitemap</h5>
-            <ul>
-              <li><%= link_to "トップ",         root_path %></li>
-              <li><%= link_to "サービス",       services_path %></li>
-              <li><%= link_to "会社概要",       about_path %></li>
-              <li><%= link_to "お問い合わせ",   new_contact_path %></li>
-            </ul>
-          </div>
-          <div>
-            <h5>Services</h5>
-            <ul>
-              <li><%= link_to "クラウド基盤", services_path %></li>
-              <li><%= link_to "AI・データ",   services_path %></li>
-              <li><%= link_to "受託開発",     services_path %></li>
-              <li><%= link_to "技術顧問",     services_path %></li>
-            </ul>
-          </div>
-          <div>
-            <h5>Contact</h5>
-            <ul>
-              <li>hello@lumio.co.jp</li>
-              <li>03-5XXX-XXXX</li>
-              <li>平日 10:00 - 18:00</li>
-            </ul>
+          <div class="meta">
+            <span>&copy; <%= Time.current.year %> Lumio Inc.</span>
+            <span class="en">Privacy / Terms / Security</span>
           </div>
         </div>
-        <div class="meta">
-          <span>&copy; <%= Time.current.year %> Lumio Inc.</span>
-          <span class="en">Privacy / Terms / Security</span>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    <% end %>
 
   </body>
 </html>
