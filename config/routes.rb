@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   root "pages#home"
   get "it-corporate", to: "pages#it_corporate", as: :it_corporate
+  get "renta-car", to: "pages#renta_car", as: :renta_car
   get "about",    to: "pages#about",    as: :about
   get "services", to: "pages#services", as: :services
 

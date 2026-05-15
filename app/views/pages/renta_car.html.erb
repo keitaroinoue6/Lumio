@@ -1,0 +1,720 @@
+<% content_for :title, "マチナカレンタカー — 福岡・糸島の街乗りレンタカー" %>
+
+<% content_for :head do %>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rc-bg:      #FBF7F0;
+    --rc-hero-bg: #F4EDE0;
+    --rc-text:    #2A2522;
+    --rc-muted:   #6B635B;
+    --rc-border:  #E4DCCB;
+    --rc-accent:  #E8693B;
+    --rc-card:    #FFFFFF;
+    --rc-cta-bg:  #2A2522;
+    --rc-line:    #06C755;
+  }
+  .rc * { box-sizing: border-box; }
+  .rc { font-family: "Noto Sans JP", sans-serif; background: var(--rc-bg); color: var(--rc-text); -webkit-font-smoothing: antialiased; }
+  .rc-container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* ── Header ── */
+  .rc-header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(251,247,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rc-border);
+    padding: 14px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .rc-header-brand {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 900; font-size: 18px; letter-spacing: 0.3px;
+    color: var(--rc-text); line-height: 1.1; text-decoration: none;
+  }
+  .rc-header-brand span { font-size: 9px; font-weight: 500; letter-spacing: 2px; opacity: 0.7; display: block; }
+  .rc-nav { display: flex; gap: 28px; align-items: center; }
+  .rc-nav a {
+    font-family: "Noto Sans JP", sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--rc-text); text-decoration: none; transition: opacity .15s;
+  }
+  .rc-nav a:hover { opacity: 0.6; }
+  .rc-btn-line {
+    padding: 10px 18px; border-radius: 22px; border: none;
+    background: var(--rc-line); color: #fff;
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; gap: 6px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(6,199,85,0.25);
+    white-space: nowrap; text-decoration: none;
+  }
+  .rc-btn-line-lg {
+    padding: 18px 28px; border-radius: 32px; border: none;
+    background: var(--rc-line); color: #fff;
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 1px;
+    display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+    box-shadow: 0 8px 24px rgba(6,199,85,0.3); white-space: nowrap; text-decoration: none;
+  }
+  .rc-btn-outline {
+    padding: 18px 28px; border-radius: 32px;
+    border: 1.5px solid var(--rc-text); background: transparent; color: var(--rc-text);
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 700; font-size: 15px;
+    cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block;
+  }
+
+  /* ── Section header util ── */
+  .rc-eyebrow {
+    font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 3px;
+    color: var(--rc-accent); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .rc-eyebrow::before { content: ""; display: block; width: 24px; height: 1px; background: var(--rc-accent); }
+  .rc-section-title {
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 48px;
+    line-height: 1.1; color: var(--rc-text); margin: 0; letter-spacing: -1.5px;
+  }
+
+  /* ── Hero ── */
+  .rc-hero { background: var(--rc-hero-bg); padding: 64px 48px 72px; overflow: hidden; }
+  .rc-hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; }
+  .rc-hero h1 {
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 84px;
+    line-height: 1; margin: 0; letter-spacing: -3px;
+  }
+  .rc-hero h1 .accent { color: var(--rc-accent); }
+  .rc-hero-sub { font-size: 16px; line-height: 1.9; color: var(--rc-muted); margin: 28px 0 36px; max-width: 460px; }
+  .rc-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .rc-hero-stats { margin-top: 48px; padding-top: 28px; border-top: 1px solid rgba(42,37,34,0.13); display: flex; gap: 48px; }
+  .rc-hero-stat-val { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 28px; line-height: 1; }
+  .rc-hero-stat-lbl { font-size: 11px; margin-top: 8px; color: var(--rc-muted); letter-spacing: 0.5px; }
+  .rc-hero-img-wrap { position: relative; min-height: 460px; }
+  .rc-hero-accent-bg {
+    position: absolute; inset: 0; background: var(--rc-accent);
+    border-radius: 28px 28px 200px 28px; transform: rotate(-2deg);
+  }
+  .rc-hero-img {
+    position: absolute; inset: 16px 16px 16px 32px; border-radius: 24px; overflow: hidden;
+    background: #222 url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1200&auto=format&fit=crop&q=80') center/cover no-repeat;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .rc-hero-img-badge {
+    position: absolute; left: 20px; bottom: 20px;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
+    padding: 12px 16px; border-radius: 14px;
+    font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--rc-text); letter-spacing: 1px;
+    display: flex; gap: 14px;
+  }
+  .rc-hero-img-badge .ready { color: var(--rc-accent); }
+  .rc-hero-float-badge {
+    position: absolute; top: -16px; right: -8px;
+    background: #fff; padding: 14px 18px; border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12); border: 1px solid var(--rc-border);
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .rc-hero-float-icon {
+    width: 40px; height: 40px; border-radius: 12px; background: var(--rc-line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rc-hero-float-sub { font-size: 11px; color: var(--rc-muted); }
+  .rc-hero-float-val { font-weight: 800; font-size: 16px; color: var(--rc-text); }
+
+  /* ── Features ── */
+  .rc-features { padding: 88px 48px; background: var(--rc-bg); }
+  .rc-feature-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .rc-feature-card {
+    background: var(--rc-card); border: 1px solid var(--rc-border); border-radius: 24px;
+    padding: 32px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .rc-feature-num { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--rc-accent); letter-spacing: 1.5px; }
+  .rc-feature-title { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 22px; color: var(--rc-text); margin-bottom: 10px; }
+  .rc-feature-desc { font-size: 13.5px; color: var(--rc-muted); line-height: 1.8; }
+
+  /* ── Steps ── */
+  .rc-steps { padding: 88px 48px; background: var(--rc-hero-bg); }
+  .rc-step-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; position: relative; }
+  .rc-step-card {
+    background: var(--rc-card); border: 1px solid var(--rc-border); border-radius: 24px;
+    padding: 36px; position: relative;
+  }
+  .rc-step-num {
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 56px;
+    color: var(--rc-accent); line-height: 1; letter-spacing: -2px; margin-bottom: 16px;
+  }
+  .rc-step-title { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 24px; color: var(--rc-text); margin-bottom: 12px; }
+  .rc-step-desc { font-size: 13.5px; color: var(--rc-muted); line-height: 1.8; }
+  .rc-step-arrow {
+    position: absolute; right: -22px; top: 50%; font-size: 24px; color: var(--rc-accent);
+    transform: translateY(-50%); font-family: "JetBrains Mono", monospace; z-index: 1;
+  }
+
+  /* ── Vehicles ── */
+  .rc-vehicles { padding: 88px 48px; background: var(--rc-bg); }
+  .rc-vehicle-header { display: flex; justify-content: space-between; align-items: flex-end; }
+  .rc-vehicle-sub { font-size: 14px; color: var(--rc-muted); line-height: 1.8; max-width: 400px; margin: 0; }
+  .rc-vehicle-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .rc-vehicle-card {
+    background: var(--rc-card); border: 1px solid var(--rc-border); border-radius: 28px;
+    padding: 32px; position: relative; overflow: hidden;
+  }
+  .rc-vehicle-tag {
+    position: absolute; top: 20px; right: 20px;
+    background: var(--rc-accent); color: #fff;
+    padding: 5px 12px; border-radius: 14px;
+    font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  }
+  .rc-vehicle-class { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--rc-muted); letter-spacing: 1.5px; }
+  .rc-vehicle-name { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 28px; color: var(--rc-text); margin-top: 6px; }
+  .rc-vehicle-model { font-size: 13px; color: var(--rc-muted); margin-top: 6px; }
+  .rc-vehicle-img {
+    margin: 20px -8px; height: 200px; border-radius: 18px; overflow: hidden;
+    background-size: cover; background-position: center; position: relative;
+  }
+  .rc-vehicle-img::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 100%);
+  }
+  .rc-vehicle-prices { padding-top: 18px; border-top: 1px solid var(--rc-border); display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+  .rc-price-label { font-family: "JetBrains Mono", monospace; font-size: 9px; color: var(--rc-muted); letter-spacing: 1px; margin-bottom: 4px; }
+  .rc-price-val { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 16px; color: var(--rc-text); }
+
+  /* ── Scenes ── */
+  .rc-scenes { padding: 88px 48px; background: var(--rc-bg); }
+  .rc-scenes-header { display: flex; justify-content: space-between; align-items: flex-end; }
+  .rc-scenes-sub { font-size: 14px; color: var(--rc-muted); line-height: 1.8; max-width: 400px; margin: 0; }
+  .rc-scenes-grid { margin-top: 48px; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 540px; }
+  .rc-scene-card {
+    position: relative; overflow: hidden; border-radius: 24px;
+    background-size: cover; background-position: center;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 28px; color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .rc-scene-card::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
+  }
+  .rc-scene-card-large { grid-row: span 2; }
+  .rc-scene-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; }
+  .rc-scene-code { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 2px; opacity: 0.85; }
+  .rc-scene-tag {
+    padding: 5px 12px; border-radius: 14px; background: rgba(255,255,255,0.18); backdrop-filter: blur(10px);
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .rc-scene-bottom { position: relative; z-index: 1; }
+  .rc-scene-time { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--rc-accent); letter-spacing: 1px; margin-bottom: 8px; }
+  .rc-scene-title-lg { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 36px; line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 12px; }
+  .rc-scene-title-sm { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 24px; line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 6px; }
+  .rc-scene-desc-lg { font-size: 13.5px; line-height: 1.75; opacity: 0.9; max-width: 380px; }
+  .rc-scene-desc-sm { font-size: 12px; line-height: 1.75; opacity: 0.9; }
+
+  /* ── Voices ── */
+  .rc-voices { padding: 88px 48px; background: var(--rc-hero-bg); }
+  .rc-voice-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .rc-voice-card { background: var(--rc-card); border: 1px solid var(--rc-border); border-radius: 24px; padding: 32px; }
+  .rc-voice-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+  .rc-voice-heading { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 18px; color: var(--rc-text); margin-bottom: 14px; line-height: 1.4; }
+  .rc-voice-body { font-size: 13.5px; color: var(--rc-muted); line-height: 1.85; margin-bottom: 20px; }
+  .rc-voice-who { padding-top: 18px; border-top: 1px solid var(--rc-border); display: flex; align-items: center; gap: 12px; }
+  .rc-voice-avatar {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--rc-accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 700; font-size: 13px; flex-shrink: 0;
+  }
+  .rc-voice-id { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--rc-text); letter-spacing: 1px; }
+
+  /* ── Locations ── */
+  .rc-locations { padding: 88px 48px; background: var(--rc-bg); }
+  .rc-location-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; }
+  .rc-location-card {
+    background: var(--rc-card); border: 1px solid var(--rc-border); border-radius: 18px;
+    padding: 20px; aspect-ratio: 1/1.1; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+  }
+  .rc-location-card-last { background: var(--rc-accent); border: none; }
+  .rc-location-sub { font-family: "JetBrains Mono", monospace; font-size: 9px; color: var(--rc-muted); letter-spacing: 1.5px; position: relative; z-index: 1; }
+  .rc-location-sub-last { color: #fff; }
+  .rc-location-name { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 14px; color: var(--rc-text); line-height: 1.2; position: relative; z-index: 1; }
+  .rc-location-name-last { color: #fff; }
+
+  /* ── FAQ ── */
+  .rc-faq { padding: 88px 48px; background: var(--rc-hero-bg); }
+  .rc-faq-grid { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  .rc-faq-item { border-top: 1px solid var(--rc-border); }
+  .rc-faq-btn {
+    width: 100%; background: transparent; border: none; padding: 22px 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    cursor: pointer; text-align: left; color: var(--rc-text);
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 600; font-size: 15.5px; line-height: 1.5;
+  }
+  .rc-faq-q { flex: 1; }
+  .rc-faq-q-prefix { color: var(--rc-accent); font-family: "JetBrains Mono", monospace; font-size: 12px; margin-right: 12px; }
+  .rc-faq-icon {
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--rc-border);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: transform .3s;
+  }
+  .rc-faq-icon.open { transform: rotate(45deg); }
+  .rc-faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height .3s, padding-bottom .3s;
+    font-size: 13.5px; line-height: 1.85; color: var(--rc-muted); padding-left: 30px;
+  }
+  .rc-faq-answer.open { max-height: 200px; padding-bottom: 22px; }
+
+  /* ── Footer ── */
+  .rc-footer { background: var(--rc-cta-bg); color: #FBF7F0; padding: 88px 48px 40px; }
+  .rc-footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: center; }
+  .rc-footer-eyebrow { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 3px; opacity: 0.6; margin-bottom: 16px; }
+  .rc-footer-headline {
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 64px;
+    line-height: 1; margin: 0; letter-spacing: -2px;
+  }
+  .rc-footer-headline .accent { color: var(--rc-accent); }
+  .rc-footer-sub { font-size: 14px; line-height: 1.85; opacity: 0.8; margin: 0 0 24px; }
+  .rc-footer-btn-line {
+    width: 100%; padding: 22px; border-radius: 32px; border: none;
+    background: var(--rc-line); color: #fff;
+    font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(6,199,85,0.3);
+  }
+  .rc-footer-bottom { max-width: 1280px; margin: 64px auto 0; padding-top: 32px; border-top: 1px solid rgba(251,247,240,0.13); display: flex; justify-content: space-between; align-items: flex-end; }
+  .rc-footer-brand { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 18px; margin-bottom: 6px; }
+  .rc-footer-brand-sub { font-family: "JetBrains Mono", monospace; font-size: 11px; opacity: 0.5; letter-spacing: 1px; }
+  .rc-footer-links { display: flex; gap: 28px; font-size: 12px; opacity: 0.6; }
+  .rc-footer-links a { color: inherit; text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .rc-container { padding: 0 6px; }
+    .rc-header {
+      padding: 10px 6px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .rc-nav {
+      width: 100%;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .rc-nav a { white-space: nowrap; font-size: 12px; }
+    .rc-btn-line { padding: 9px 14px; }
+    .rc-hero,
+    .rc-features,
+    .rc-steps,
+    .rc-vehicles,
+    .rc-scenes,
+    .rc-voices,
+    .rc-locations,
+    .rc-faq,
+    .rc-footer {
+      padding-top: 56px;
+      padding-bottom: 56px;
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+    .rc-section-title { font-size: 34px; letter-spacing: -0.5px; }
+    .rc-hero h1 { font-size: 44px; letter-spacing: -1px; }
+    .rc-hero-sub { font-size: 14px; line-height: 1.75; margin: 20px 0 28px; }
+    .rc-hero-grid,
+    .rc-footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .rc-hero-img-wrap { min-height: 280px; }
+    .rc-hero-stats {
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .rc-btn-line-lg,
+    .rc-btn-outline {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 14px;
+    }
+    .rc-hero-stats { margin-top: 32px; padding-top: 20px; }
+    .rc-hero-stat-val { font-size: 24px; }
+    .rc-step-grid { grid-template-columns: 1fr; }
+    .rc-step-arrow { display: none; }
+    .rc-vehicle-header,
+    .rc-scenes-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .rc-vehicle-grid,
+    .rc-voice-grid,
+    .rc-faq-grid { grid-template-columns: 1fr; }
+    .rc-scenes-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      height: auto;
+    }
+    .rc-scene-card,
+    .rc-scene-card-large {
+      grid-row: auto;
+      min-height: 220px;
+    }
+    .rc-feature-grid { grid-template-columns: 1fr; margin-top: 32px; }
+    .rc-feature-card,
+    .rc-step-card,
+    .rc-voice-card,
+    .rc-vehicle-card { padding: 24px; border-radius: 20px; }
+    .rc-feature-title { font-size: 20px; }
+    .rc-step-num { font-size: 44px; }
+    .rc-step-title { font-size: 20px; }
+    .rc-vehicle-name { font-size: 24px; }
+    .rc-vehicle-img { height: 170px; margin: 16px -4px; }
+    .rc-vehicle-prices { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 8px; }
+    .rc-scene-card { min-height: 220px; padding: 22px; }
+    .rc-scene-title-lg { font-size: 30px; }
+    .rc-scene-title-sm { font-size: 22px; }
+    .rc-location-grid { grid-template-columns: 1fr; }
+    .rc-faq-btn { font-size: 14px; padding: 18px 0; }
+    .rc-faq-answer { padding-left: 22px; font-size: 13px; }
+    .rc-footer-headline { font-size: 46px; letter-spacing: -1px; }
+    .rc-footer-sub { font-size: 13px; }
+    .rc-footer-btn-line { padding: 18px; font-size: 15px; }
+    .rc-hero-img { inset: 10px 10px 10px 18px; border-radius: 18px; }
+    .rc-hero-accent-bg { border-radius: 20px 20px 120px 20px; }
+    .rc-hero-float-badge {
+      top: auto;
+      right: 8px;
+      bottom: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+    .rc-hero-float-icon { width: 32px; height: 32px; border-radius: 10px; }
+    .rc-hero-float-val { font-size: 14px; }
+    .rc-hero-img-badge {
+      left: 10px;
+      bottom: 10px;
+      padding: 8px 10px;
+      gap: 8px;
+      font-size: 9px;
+    }
+    .rc-scene-top { flex-direction: column; gap: 8px; }
+    .rc-location-grid { grid-template-columns: 1fr; }
+    .rc-footer-bottom {
+      margin-top: 40px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .rc-footer-links { font-size: 11px; gap: 10px 14px; flex-wrap: wrap; }
+    .rc-footer-brand-sub { font-size: 10px; }
+  }
+</style>
+<% end %>
+
+<div class="rc">
+
+  <%# ── Header ── %>
+  <header class="rc-header">
+    <a href="#" class="rc-header-brand">
+      マチナカ<span>RENTACAR / FUKUOKA</span>
+    </a>
+    <nav class="rc-nav">
+      <a href="#features">特徴</a>
+      <a href="#vehicles">車種・料金</a>
+      <a href="#steps">ご利用の流れ</a>
+      <a href="#locations">店舗</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#" class="rc-btn-line">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M19.365 9.863c.349 0 .63.285.63.631s-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .348-.281.632-.63.632H16.98c-.345 0-.627-.284-.627-.632V8.108c0-.345.282-.63.63-.63h2.382c.349 0 .63.285.63.63 0 .348-.281.63-.63.63H17.61v1.125h1.755zm-3.875 3.006c0 .275-.176.514-.437.601-.065.02-.134.031-.199.031-.211 0-.4-.091-.527-.258L12.34 10.99v1.876c0 .348-.281.631-.63.631-.347 0-.628-.284-.628-.631V8.108c0-.272.175-.513.437-.599.063-.018.134-.028.197-.028.211 0 .4.092.526.254l1.988 2.269V8.108c0-.345.283-.63.63-.63.35 0 .632.285.632.63v4.761zM9.879 12.866c0 .348-.281.632-.631.632-.345 0-.626-.284-.626-.632V8.108c0-.345.281-.63.626-.63.35 0 .631.285.631.63v4.758zM8.185 13.498H5.809c-.35 0-.631-.284-.631-.632V8.108c0-.345.281-.63.631-.63.346 0 .627.285.627.63v4.128H8.185c.347 0 .63.284.63.631 0 .348-.283.63-.63.63M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        LINE予約
+      </a>
+    </nav>
+  </header>
+
+  <%# ── Hero ── %>
+  <section class="rc-hero">
+    <div class="rc-hero-grid rc-container">
+      <div>
+        <div class="rc-eyebrow" style="margin-bottom:18px;">24H / FUKUOKA · ITOSHIMA</div>
+        <h1>街中を、<br><span class="accent">自在に。</span></h1>
+        <p class="rc-hero-sub">
+          いつでも、どこでも、誰でも。<br>
+          福岡市・糸島市内 <b style="color:var(--rc-text)">26拠点</b>から、<br>
+          24時間いつでも出発・返却が可能です。
+        </p>
+        <div class="rc-hero-btns">
+          <a href="#" class="rc-btn-line-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M19.365 9.863c.349 0 .63.285.63.631s-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .348-.281.632-.63.632H16.98c-.345 0-.627-.284-.627-.632V8.108c0-.345.282-.63.63-.63h2.382c.349 0 .63.285.63.63 0 .348-.281.63-.63.63H17.61v1.125h1.755zm-3.875 3.006c0 .275-.176.514-.437.601-.065.02-.134.031-.199.031-.211 0-.4-.091-.527-.258L12.34 10.99v1.876c0 .348-.281.631-.63.631-.347 0-.628-.284-.628-.631V8.108c0-.272.175-.513.437-.599.063-.018.134-.028.197-.028.211 0 .4.092.526.254l1.988 2.269V8.108c0-.345.283-.63.63-.63.35 0 .632.285.632.63v4.761zM9.879 12.866c0 .348-.281.632-.631.632-.345 0-.626-.284-.626-.632V8.108c0-.345.281-.63.626-.63.35 0 .631.285.631.63v4.758zM8.185 13.498H5.809c-.35 0-.631-.284-.631-.632V8.108c0-.345.281-.63.631-.63.346 0 .627.285.627.63v4.128H8.185c.347 0 .63.284.63.631 0 .348-.283.63-.63.63M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+            LINEで今すぐ予約
+          </a>
+          <a href="#vehicles" class="rc-btn-outline">料金を見る →</a>
+        </div>
+        <div class="rc-hero-stats">
+          <% [['24h','営業・受付'],['26','拠点数'],['LINE','で完結'],['10K+','月間利用']].each do |val, label| %>
+          <div>
+            <div class="rc-hero-stat-val"><%= val %></div>
+            <div class="rc-hero-stat-lbl"><%= label %></div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="rc-hero-img-wrap">
+        <div class="rc-hero-accent-bg"></div>
+        <div class="rc-hero-img">
+          <div class="rc-hero-img-badge">
+            <span>FUKUOKA</span><span style="opacity:0.4">·</span><span>24H</span><span style="opacity:0.4">·</span><span class="ready">● READY</span>
+          </div>
+        </div>
+        <div class="rc-hero-float-badge">
+          <div class="rc-hero-float-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M19.365 9.863c.349 0 .63.285.63.631s-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .348-.281.632-.63.632H16.98c-.345 0-.627-.284-.627-.632V8.108c0-.345.282-.63.63-.63h2.382c.349 0 .63.285.63.63 0 .348-.281.63-.63.63H17.61v1.125h1.755zm-3.875 3.006c0 .275-.176.514-.437.601-.065.02-.134.031-.199.031-.211 0-.4-.091-.527-.258L12.34 10.99v1.876c0 .348-.281.631-.63.631-.347 0-.628-.284-.628-.631V8.108c0-.272.175-.513.437-.599.063-.018.134-.028.197-.028.211 0 .4.092.526.254l1.988 2.269V8.108c0-.345.283-.63.63-.63.35 0 .632.285.632.63v4.761zM9.879 12.866c0 .348-.281.632-.631.632-.345 0-.626-.284-.626-.632V8.108c0-.345.281-.63.626-.63.35 0 .631.285.631.63v4.758zM8.185 13.498H5.809c-.35 0-.631-.284-.631-.632V8.108c0-.345.281-.63.631-.63.346 0 .627.285.627.63v4.128H8.185c.347 0 .63.284.63.631 0 .348-.283.63-.63.63M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </div>
+          <div>
+            <div class="rc-hero-float-sub">最短</div>
+            <div class="rc-hero-float-val">5分で予約完了</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Features ── %>
+  <section class="rc-features" id="features">
+    <div class="rc-container">
+      <div class="rc-eyebrow">FEATURES</div>
+      <h2 class="rc-section-title">マチナカが<br>選ばれる理由。</h2>
+      <div class="rc-feature-grid">
+        <% [
+          ['01','24時間対応','早朝深夜OK、好きな時間に出発・返却。'],
+          ['02','LINE予約','友達追加で、最短5分で予約完了。'],
+          ['03','26拠点','福岡市・糸島市内に充実のネットワーク。'],
+          ['04','明朗会計','追加料金なし、保険込みで安心の価格。'],
+          ['05','保険込み','対人・対物・車両・人身傷害を全車標準。'],
+          ['06','365日サポート','困ったときも公式LINEで素早く対応。'],
+        ].each do |num, title, desc| %>
+        <div class="rc-feature-card">
+          <div class="rc-feature-num"><%= num %></div>
+          <div>
+            <div class="rc-feature-title"><%= title %></div>
+            <div class="rc-feature-desc"><%= desc %></div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Steps ── %>
+  <section class="rc-steps" id="steps">
+    <div class="rc-container">
+      <div class="rc-eyebrow">HOW IT WORKS</div>
+      <h2 class="rc-section-title">予約まで、<br>たった3ステップ。</h2>
+      <div class="rc-step-grid">
+        <% [
+          ['01','公式LINE追加','マチナカレンタカーを友達追加。'],
+          ['02','予約情報の入力','LINEで日時・車種・拠点を送信。'],
+          ['03','申し込み確定','スタッフが空き確認し、予約確定。'],
+        ].each_with_index do |(num, title, desc), i| %>
+        <div class="rc-step-card">
+          <div class="rc-step-num"><%= num %></div>
+          <div class="rc-step-title"><%= title %></div>
+          <div class="rc-step-desc"><%= desc %></div>
+          <% if i < 2 %>
+          <span class="rc-step-arrow">→</span>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Vehicles ── %>
+  <section class="rc-vehicles" id="vehicles">
+    <div class="rc-container">
+      <div class="rc-vehicle-header">
+        <div>
+          <div class="rc-eyebrow">OUR FLEET</div>
+          <h2 class="rc-section-title">車種・料金</h2>
+        </div>
+        <p class="rc-vehicle-sub">用途に合わせて、ちょうどいい一台を。<br>軽自動車から普通車まで4クラスをご用意。</p>
+      </div>
+      <div class="rc-vehicle-grid">
+        <% [
+          { cls: 'A', name: '軽自動車',     model: 'デイズ / ワゴンR',         tag: '人気',     img: 'https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?w=800&auto=format&fit=crop&q=80', color: '#EFC24D', prices: [['12h','3,000'],['24h','4,400'],['36h','7,400'],['60h','10,400']] },
+          { cls: 'B', name: 'ハイルーフ軽', model: 'デイズルークス / タント',   tag: nil,        img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop&q=80', color: '#4AA373', prices: [['12h','3,300'],['24h','4,700'],['36h','8,000'],['60h','11,300']] },
+          { cls: 'C', name: 'コンパクトカー', model: 'アクア / ノート / デミオ', tag: nil,        img: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&auto=format&fit=crop&q=80', color: '#3A6EA5', prices: [['12h','4,600'],['24h','6,000'],['36h','10,600'],['60h','15,200']] },
+          { cls: 'D', name: 'ハイルーフ普通車', model: 'ソリオ / ルーミー',     tag: 'ファミリー', img: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&auto=format&fit=crop&q=80', color: '#C55A3B', prices: [['12h','4,900'],['24h','6,300'],['36h','11,200'],['60h','16,100']] },
+        ].each do |car| %>
+        <div class="rc-vehicle-card">
+          <% if car[:tag] %>
+          <div class="rc-vehicle-tag"><%= car[:tag] %></div>
+          <% end %>
+          <div class="rc-vehicle-class">CLASS <%= car[:cls] %></div>
+          <div class="rc-vehicle-name"><%= car[:name] %></div>
+          <div class="rc-vehicle-model"><%= car[:model] %></div>
+          <div class="rc-vehicle-img" style="background-color:<%= car[:color] %>22;background-image:url('<%= car[:img] %>')"></div>
+          <div class="rc-vehicle-prices">
+            <% car[:prices].each do |time, price| %>
+            <div>
+              <div class="rc-price-label"><%= time %></div>
+              <div class="rc-price-val">¥<%= price %></div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Scenes ── %>
+  <section class="rc-scenes">
+    <div class="rc-container">
+      <div class="rc-scenes-header">
+        <div>
+          <div class="rc-eyebrow">USE CASES</div>
+          <h2 class="rc-section-title">こんなシーンで、<br>マチナカ。</h2>
+        </div>
+        <p class="rc-scenes-sub">日常のちょっとした足から、<br>特別な一日まで。さまざまなシーンに。</p>
+      </div>
+      <div class="rc-scenes-grid">
+        <% [
+          { no: '01', en: 'COMMUTE',  title: '通勤・送迎',    time: '1〜3h',   tag: 'デイリー',   large: true,  img: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=900&auto=format&fit=crop&q=80',  desc: '電車が止まった朝も、雨の下校迎えも。最寄り拠点からすぐ乗り出せる安心感。' },
+          { no: '02', en: 'WEEKEND',  title: '週末の買い出し', time: '3〜12h',  tag: 'ファミリー', large: false, img: 'https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?w=900&auto=format&fit=crop&q=80', desc: 'まとめ買いも、家電・家具の運搬も。ハイルーフなら大きな荷物も余裕で収納。' },
+          { no: '03', en: 'LEISURE',  title: '糸島、海へ。',   time: '12〜24h', tag: 'トリップ',   large: false, img: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=900&auto=format&fit=crop&q=80',  desc: '福岡からの日帰り旅行にちょうどいい。面倒な手続きなしで、そのまま出発。' },
+          { no: '04', en: 'BUSINESS', title: 'ビジネス出張',   time: '24〜36h', tag: 'ビジネス',   large: false, img: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&auto=format&fit=crop&q=80',  desc: '電車より柔軟に、タクシーよりコスパよく。複数点を回る営業にも。' },
+        ].each do |s| %>
+        <div class="rc-scene-card <%= s[:large] ? 'rc-scene-card-large' : '' %>"
+             style="background-image:url('<%= s[:img] %>')">
+          <div class="rc-scene-top">
+            <span class="rc-scene-code">[<%= s[:no] %>] <%= s[:en] %></span>
+            <span class="rc-scene-tag"><%= s[:tag] %></span>
+          </div>
+          <div class="rc-scene-bottom">
+            <div class="rc-scene-time"><%= s[:time] %></div>
+            <div class="<%= s[:large] ? 'rc-scene-title-lg' : 'rc-scene-title-sm' %>"><%= s[:title] %></div>
+            <div class="<%= s[:large] ? 'rc-scene-desc-lg' : 'rc-scene-desc-sm' %>"><%= s[:desc] %></div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Voices ── %>
+  <section class="rc-voices">
+    <div class="rc-container">
+      <div class="rc-eyebrow">VOICES</div>
+      <h2 class="rc-section-title">お客様の声</h2>
+      <div class="rc-voice-grid">
+        <% [
+          { h: '手続が簡単で利用できた', n: 'A.S', t: 'はじめて利用しました。手続きや支払いも公式LINEでスムーズに借りれます。駅近くのパーキングから出発・返却できてとても助かりました。' },
+          { h: '体験がとても良かった',   n: 'K.T', t: '24時間車を返却できるのはとても便利です。初めてここでレンタカーを借りた体験はとても良かったです。スタッフの返事も早い！' },
+          { h: '不安もすぐに解消',       n: 'M.N', t: 'LINEのみのやりとりで不安でしたが、スタッフさんの迅速丁寧で全く問題なく利用できました。コスパも良くて家族も喜んでいます。' },
+        ].each do |v| %>
+        <div class="rc-voice-card">
+          <div class="rc-voice-stars">
+            <% 5.times do %>
+            <svg width="14" height="14" viewBox="0 0 12 12"><path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5L6 9l-3 1.5.5-3.5L1 4.5 4.5 4z" fill="#E8693B"/></svg>
+            <% end %>
+          </div>
+          <div class="rc-voice-heading">「<%= v[:h] %>」</div>
+          <div class="rc-voice-body"><%= v[:t] %></div>
+          <div class="rc-voice-who">
+            <div class="rc-voice-avatar"><%= v[:n][0] %></div>
+            <div class="rc-voice-id">USER <%= v[:n] %></div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Locations ── %>
+  <section class="rc-locations" id="locations">
+    <div class="rc-container">
+      <div class="rc-eyebrow">LOCATIONS</div>
+      <h2 class="rc-section-title">主な拠点</h2>
+      <p style="font-size:14px;color:var(--rc-muted);margin-top:14px;line-height:1.7;">福岡市・糸島市内、計26拠点。</p>
+      <div class="rc-location-grid">
+        <% [
+          ['博多駅店','HAKATA'],
+          ['天神駅店','TENJIN'],
+          ['六本松駅店','ROPPONMATSU'],
+          ['姪浜駅店','MEINOHAMA'],
+          ['糸島高校前駅店','ITOSHIMA'],
+          ['ほか 21拠点','+21 MORE'],
+        ].each_with_index do |(name, sub), i| %>
+        <div class="rc-location-card <%= i == 5 ? 'rc-location-card-last' : '' %>">
+          <div class="rc-location-sub <%= i == 5 ? 'rc-location-sub-last' : '' %>"><%= sub %></div>
+          <div class="rc-location-name <%= i == 5 ? 'rc-location-name-last' : '' %>"><%= name %></div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── FAQ ── %>
+  <section class="rc-faq" id="faq">
+    <div class="rc-container">
+      <div class="rc-eyebrow">FAQ</div>
+      <h2 class="rc-section-title">よくある質問</h2>
+      <div class="rc-faq-grid">
+        <% [
+          ['24時間いつでも出発・返却できますか？','事前予約いただければ、早朝・深夜を問わず24時間出発・返却が可能です。'],
+          ['当日すぐに借りられますか？','空き状況によります。まずは公式LINEからお問い合わせください。スタッフが素早くご案内します。'],
+          ['予約はLINEだけでできますか？','はい、公式LINEを友達追加いただくだけで、予約から確定までLINE上で完結します。'],
+          ['キャンセル料はかかりますか？','ご予約内容により異なりますので、公式LINEでスタッフにお気軽にお尋ねください。'],
+          ['支払い方法は？','公式LINEでのやりとりで、スムーズにお支払いが可能です。詳しくはお問い合わせください。'],
+          ['免許を取ったばかりでも借りられますか？','初心者マークの方も歓迎です。運転に不安がある場合は、店舗スタッフが丁寧にご案内いたします。'],
+        ].each_with_index do |(q, a), i| %>
+        <div class="rc-faq-item">
+          <button class="rc-faq-btn" onclick="rcToggleFaq(<%= i %>)" type="button">
+            <span class="rc-faq-q"><span class="rc-faq-q-prefix">Q.</span><%= q %></span>
+            <span class="rc-faq-icon" id="rc-faq-icon-<%= i %>">
+              <svg width="12" height="12" viewBox="0 0 10 10"><path d="M5 1v8M1 5h8" stroke="#2A2522" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="rc-faq-answer" id="rc-faq-answer-<%= i %>"><%= a %></div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ── Footer ── %>
+  <footer class="rc-footer">
+    <div class="rc-footer-grid">
+      <div>
+        <div class="rc-footer-eyebrow">RESERVE NOW</div>
+        <h2 class="rc-footer-headline">さあ、鍵を<br><span class="accent">開けよう。</span></h2>
+      </div>
+      <div>
+        <p class="rc-footer-sub">ワクワク感いっぱいの冒険、<br>予約は今がベストタイミング。</p>
+        <button class="rc-footer-btn-line">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M19.365 9.863c.349 0 .63.285.63.631s-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .348-.281.632-.63.632H16.98c-.345 0-.627-.284-.627-.632V8.108c0-.345.282-.63.63-.63h2.382c.349 0 .63.285.63.63 0 .348-.281.63-.63.63H17.61v1.125h1.755zm-3.875 3.006c0 .275-.176.514-.437.601-.065.02-.134.031-.199.031-.211 0-.4-.091-.527-.258L12.34 10.99v1.876c0 .348-.281.631-.63.631-.347 0-.628-.284-.628-.631V8.108c0-.272.175-.513.437-.599.063-.018.134-.028.197-.028.211 0 .4.092.526.254l1.988 2.269V8.108c0-.345.283-.63.63-.63.35 0 .632.285.632.63v4.761zM9.879 12.866c0 .348-.281.632-.631.632-.345 0-.626-.284-.626-.632V8.108c0-.345.281-.63.626-.63.35 0 .631.285.631.63v4.758zM8.185 13.498H5.809c-.35 0-.631-.284-.631-.632V8.108c0-.345.281-.63.631-.63.346 0 .627.285.627.63v4.128H8.185c.347 0 .63.284.63.631 0 .348-.283.63-.63.63M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          LINEで予約する →
+        </button>
+      </div>
+    </div>
+    <div class="rc-footer-bottom">
+      <div>
+        <div class="rc-footer-brand">マチナカレンタカー</div>
+        <div class="rc-footer-brand-sub">FUKUOKA · ITOSHIMA / 24H / 26 NODES</div>
+      </div>
+      <div class="rc-footer-links">
+        <a href="#">貸渡誓約書</a>
+        <a href="#">特定商取引法に基づく表記</a>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function rcToggleFaq(i) {
+    var answer = document.getElementById('rc-faq-answer-' + i);
+    var icon   = document.getElementById('rc-faq-icon-' + i);
+    var isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.rc-faq-answer').forEach(function(el){ el.classList.remove('open'); });
+    document.querySelectorAll('.rc-faq-icon').forEach(function(el){ el.classList.remove('open'); });
+    if (!isOpen) {
+      answer.classList.add('open');
+      icon.classList.add('open');
+    }
+  }
+</script>

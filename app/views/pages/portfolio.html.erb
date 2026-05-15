@@ -70,7 +70,9 @@
       <article class="work-card">
         <span class="eyebrow">Work 01</span>
         <h2>ITコーポレートサイト</h2>
-        <p>現在のコーポレートサイトデザインです。会社概要・サービス・お問い合わせ導線を含みます。</p>
+        <p>企業ブランディングを意識した
+          IT企業向けコーポレートサイトです。
+          会社概要・サービス・お問い合わせ導線を含みます。</p>
         <div class="actions">
           <%= link_to it_corporate_path, class: "btn btn-primary" do %>
             サイトを見る
@@ -81,8 +83,15 @@
 
       <article class="work-card">
         <span class="eyebrow">Work 02</span>
-        <h2>レンタカーLP（準備中）</h2>
-        <p>こちらは次に追加する実績枠です。後で `/renta-car` を追加すればこのカードから遷移できます。</p>
+        <h2>レンタカーLP</h2>
+        <p>予約導線と問い合わせ獲得を重視した
+          レンタカー向けLPページです。</p>
+        <div class="actions">
+          <%= link_to renta_car_path, class: "btn btn-primary" do %>
+            サイトを見る
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          <% end %>
+        </div>
       </article>
     </div>
   </div>
