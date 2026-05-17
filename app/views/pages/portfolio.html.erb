@@ -48,10 +48,91 @@
 .work-card .actions {
   margin-top: auto;
 }
+.work-card.featured {
+  grid-column: 1 / -1;
+  padding: 38px;
+  gap: 18px;
+}
+.work-card.featured h2 {
+  font-size: clamp(30px, 3.5vw, 42px);
+  line-height: 1.3;
+}
+.work-card.featured p {
+  font-size: 18px;
+  line-height: 1.9;
+  max-width: 72ch;
+}
+.work-card.featured .actions .btn {
+  font-size: 16px;
+  padding: 14px 24px;
+}
+.system-work-gallery {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.system-work-visual {
+  background: #fff;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.system-work-visual img {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  display: block;
+  background: #f4f6fb;
+  padding: 12px;
+}
+.system-work-visual .placeholder {
+  width: 100%;
+  height: 260px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #eef2fb 0%, #f7edf1 100%);
+  color: var(--ink-3);
+  font-family: var(--font-en);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-2);
+}
+.system-work-visual .body {
+  padding: 18px 20px 22px;
+}
+.system-work-visual h3 {
+  font-size: 17px;
+  line-height: 1.5;
+}
+.system-work-visual p {
+  margin-top: 10px;
+  margin-bottom: 0;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.85;
+}
 
 @media (max-width: 980px) {
   .works-grid {
     grid-template-columns: 1fr;
+  }
+  .work-card.featured {
+    padding: 30px;
+  }
+  .work-card.featured p {
+    font-size: 16px;
+  }
+  .system-work-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1280px) and (min-width: 981px) {
+  .system-work-gallery {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
@@ -93,6 +174,58 @@
           <% end %>
         </div>
       </article>
+
+      <article class="work-card featured">
+        <span class="eyebrow">System Development</span>
+        <h2>システム開発実績</h2>
+        <p>レンタカー業務の改善や運用最適化につながるシステム開発実績を、代表的な画面とともに紹介しています。
+          その他では車検の自動通知やリピート率の可視化などを行っています。</p>
+        <div class="actions">
+          <span class="btn btn-ghost" style="pointer-events: none; opacity: .7;">下記に実績を掲載中</span>
+        </div>
+      </article>
+
+      <div class="system-work-gallery">
+        <article class="system-work-visual">
+          <%= image_tag "system_works/system_work_line.png", alt: "LINE連携で予約確認を通知する画面" %>
+          <div class="body">
+            <h3>LINE連携による予約確認の自動通知</h3>
+            <p>申し込み内容を自動通知し、対応漏れ防止と業務効率化を実現。</p>
+          </div>
+        </article>
+
+        <article class="system-work-visual">
+          <%= image_tag "system_works/system_work_admin.png", alt: "予約一覧を管理する管理画面" %>
+          <div class="body">
+            <h3>予約一覧・絞り込み管理画面</h3>
+            <p>予約ステータスや支払方法など複数条件で絞り込み、予約・顧客・ステータス管理を一元化し、確認業務を効率化。</p>
+          </div>
+        </article>
+
+        <article class="system-work-visual">
+          <%= image_tag "system_works/system_work_analytics.png", alt: "月別予約数の可視化ダッシュボード画面" %>
+          <div class="body">
+            <h3>月別予約推移の可視化ダッシュボード</h3>
+            <p>月別・拠点別データを可視化し、運営改善と意思決定を支援。</p>
+          </div>
+        </article>
+
+        <article class="system-work-visual">
+          <%= image_tag "system_works/system_work_stripe_logo.png", alt: "Stripe公式ロゴ画像" %>
+          <div class="body">
+            <h3>Stripe決済連携</h3>
+            <p>クレジットカード決済をStripeで安全に処理。予約フローから決済完了までをシームレスに連携し、管理画面への反映まで自動化。</p>
+          </div>
+        </article>
+
+        <article class="system-work-visual">
+          <%= image_tag "system_works/system_work_status_notification.png", alt: "ステータス変更時に自動送信される通知画面" %>
+          <div class="body">
+            <h3>ステータス変更時の自動メッセージ通知</h3>
+            <p>「確定」「キャンセル」などのステータス変更に応じて通知文面を自動送信。案内漏れを減らし、顧客対応の速度と品質を向上。</p>
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </section>
