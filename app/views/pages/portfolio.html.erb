@@ -290,6 +290,29 @@
 
 <div class="pf">
 
+  <%# ===== ABOUT ===== %>
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="reveal about">
+        <span class="eyebrow accent">About Developer</span>
+        <h2 class="h2" style="margin-top:18px;">開発者について</h2>
+        <p class="lead" style="margin-top:18px; max-width: 70ch;">
+          福岡を拠点にホームページ制作と業務システム開発を行っています。<br>
+          実際にレンタカー事業の運営にも携わっており、現場の課題を理解した上でシステム設計・開発を行っています。<br>
+          単なる開発ではなく、業務効率化や売上向上につながる仕組み作りを重視しています。
+        </p>
+        <div class="stack-wrap">
+          <h3 class="stack-title">使用技術</h3>
+          <div class="stack-tags">
+            <% ["Rails","Stripe","LINE Messaging API","AWS","Docker","Supabase","MySQL","Webhook"].each do |tech| %>
+              <span><%= tech %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <%# ===== SYSTEM DEVELOPMENT ===== %>
   <section class="section" id="system">
     <div class="wrap">
@@ -478,29 +501,6 @@
     </div>
   </section>
 
-  <%# ===== ABOUT ===== %>
-  <section class="section" id="about">
-    <div class="wrap">
-      <div class="reveal about">
-        <span class="eyebrow accent">About Developer</span>
-        <h2 class="h2" style="margin-top:18px;">開発者について</h2>
-        <p class="lead" style="margin-top:18px; max-width: 70ch;">
-          福岡を拠点にホームページ制作と業務システム開発を行っています。<br>
-          実際にレンタカー事業の運営にも携わっており、現場の課題を理解した上でシステム設計・開発を行っています。<br>
-          単なる開発ではなく、業務効率化や売上向上につながる仕組み作りを重視しています。
-        </p>
-        <div class="stack-wrap">
-          <h3 class="stack-title">使用技術</h3>
-          <div class="stack-tags">
-            <% ["Rails","Next.js","React","TypeScript","Stripe","LINE Messaging API","AWS","Docker","Supabase","MySQL"].each do |tech| %>
-              <span><%= tech %></span>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <%# ===== CTA ===== %>
   <section class="cta-section" id="contact">
     <div class="wrap">
@@ -540,11 +540,15 @@
   <%# ===== WORKS ===== %>
   <section class="section" id="works">
     <div class="wrap">
+      <div class="reveal" style="margin-bottom: 20px;">
+        <p class="small">※以下は提案力・設計力を示すための自主制作サンプルです。クライアントからの依頼案件ではありません。</p>
+      </div>
       <div class="reveal work-grid">
         <article class="card work-card">
-          <span class="eyebrow">WORK 01</span>
+          <span class="eyebrow">SAMPLE 01</span>
           <h3 class="h3">ITコーポレートサイト</h3>
           <div class="work-meta">
+            <div class="row"><span class="kj">区分</span><span class="v">自主制作（依頼案件ではありません）</span></div>
             <div class="row"><span class="kj">概要</span><span class="v">企業ブランディングを意識したIT企業向けコーポレートサイト。会社概要・サービス・お問い合わせ導線までを設計。</span></div>
             <div class="row"><span class="kj">制作目的</span><span class="v">信頼感のある企業ブランディングと、問い合わせ獲得の最大化。</span></div>
           </div>
@@ -555,9 +559,10 @@
         </article>
 
         <article class="card work-card">
-          <span class="eyebrow">WORK 02</span>
+          <span class="eyebrow">SAMPLE 02</span>
           <h3 class="h3">レンタカーLP</h3>
           <div class="work-meta">
+            <div class="row"><span class="kj">区分</span><span class="v">自主制作（依頼案件ではありません）</span></div>
             <div class="row"><span class="kj">概要</span><span class="v">予約導線と問い合わせ獲得を重視したレンタカー向けランディングページ。</span></div>
             <div class="row"><span class="kj">制作目的</span><span class="v">予約・問い合わせのコンバージョン率を高める導線設計。</span></div>
           </div>
