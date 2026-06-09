@@ -1,231 +1,634 @@
-<% content_for :title, "Portfolio" %>
-<% content_for :description, "制作実績の入り口ページです。各プロジェクトのLPやコーポレートサイトに遷移できます。" %>
+<% content_for :title, "制作実績一覧 | Web & システム開発" %>
+<% content_for :description, "ホームページ制作からレンタカー業界向けの業務システム開発まで。予約管理・LINE連携・Stripe決済・売上分析など、業務効率化のご相談を承ります。" %>
 
 <% content_for :head do %>
 <style>
-.portfolio {
-  padding: 96px 0 110px;
+/* ============================================================
+   制作実績一覧 — Portfolio / System Development
+   ============================================================ */
+.pf {
+  --ink:#15171c; --ink-soft:#2b2e36; --muted:#6c717b; --muted-2:#9499a2;
+  --pf-line:rgba(20,22,28,0.085); --pf-line-2:rgba(20,22,28,0.06);
+  --card:#fff;
+  --accent:#4a62c5; --accent-ink:#3a4ea8; --accent-wash:#eef0f9;
+  --r-xl:24px; --r-lg:20px; --r-md:16px; --r-chip:999px;
+  --sh-1:0 1px 2px rgba(16,18,24,0.04),0 1px 1px rgba(16,18,24,0.03);
+  --sh-2:0 1px 2px rgba(16,18,24,0.04),0 14px 34px -16px rgba(16,18,24,0.14);
+  --sh-3:0 2px 4px rgba(16,18,24,0.05),0 28px 56px -22px rgba(16,18,24,0.22);
+  --jp:"Noto Sans JP",system-ui,sans-serif;
+  --lat:"Plus Jakarta Sans","Noto Sans JP",system-ui,sans-serif;
+
+  font-family: var(--jp);
+  color: var(--ink);
   background:
-    radial-gradient(55% 50% at 90% 10%, #eaeefb 0%, transparent 65%),
-    radial-gradient(45% 45% at 10% 90%, #f4ebec 0%, transparent 65%),
-    var(--bg);
+    radial-gradient(120% 90% at 0% 0%, rgba(247,243,233,0.9) 0%, rgba(247,243,233,0) 46%),
+    radial-gradient(120% 110% at 100% 100%, rgba(232,236,247,0.9) 0%, rgba(232,236,247,0) 50%),
+    linear-gradient(150deg,#f6f4ee 0%,#f2f1ef 40%,#edeff5 100%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.7;
+  letter-spacing: 0.005em;
 }
-.portfolio h1 {
-  font-size: clamp(38px, 5vw, 62px);
-  line-height: 1.22;
-  letter-spacing: -0.01em;
+.pf ::selection { background: var(--accent); color: #fff; }
+.pf .wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px,5vw,40px); }
+
+/* ===== Typography ===== */
+.pf .eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--lat); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted-2);
 }
-.portfolio .lede {
-  margin-top: 22px;
-  max-width: 62ch;
+.pf .eyebrow::before { content: ""; width: 26px; height: 1.5px; background: currentColor; opacity: 0.8; }
+.pf .eyebrow.accent { color: var(--accent); }
+.pf .h1 { font-weight: 900; line-height: 1.04; letter-spacing: -0.015em; font-size: clamp(42px,6.4vw,76px); color: var(--ink); margin: 0; }
+.pf .h2 { font-weight: 900; line-height: 1.12; letter-spacing: -0.01em; font-size: clamp(28px,3.8vw,46px); color: var(--ink); margin: 0; }
+.pf .h3 { font-weight: 700; line-height: 1.4; letter-spacing: -0.005em; font-size: clamp(18px,1.5vw,21px); color: var(--ink); margin: 0; }
+.pf .lead { color: var(--muted); font-size: clamp(15px,1.25vw,17px); line-height: 1.95; font-weight: 400; max-width: 60ch; }
+.pf .small { font-size: 14px; color: var(--muted); line-height: 1.85; }
+
+/* ===== Buttons ===== */
+.pf .btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--jp); font-weight: 700; font-size: 15px;
+  padding: 15px 26px; border-radius: var(--r-chip); border: 1px solid transparent;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, background .25s, color .25s, border-color .25s;
 }
-.works-grid {
-  margin-top: 44px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+.pf .btn .arr { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+.pf .btn:hover .arr { transform: translateX(5px); }
+.pf .btn-dark { background: var(--ink); color: #fff; box-shadow: var(--sh-1); }
+.pf .btn-dark:hover { transform: translateY(-2px); box-shadow: var(--sh-2); background: #000; }
+.pf .btn-light { background: #fff; color: var(--ink); border-color: var(--pf-line); }
+.pf .btn-light:hover { transform: translateY(-2px); box-shadow: var(--sh-2); }
+.pf .btn-ghost-dark { background: rgba(255,255,255,0.06); color: #fff; border-color: rgba(255,255,255,0.22); }
+.pf .btn-ghost-dark:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+
+/* ===== Sections ===== */
+.pf .section { padding-block: clamp(72px,9vw,132px); }
+.pf .section-head { margin-bottom: clamp(40px,5vw,64px); }
+.pf .section-head .eyebrow { margin-bottom: 22px; }
+.pf .section-head .h2 { margin-bottom: 22px; }
+
+/* ===== Hero ===== */
+.pf .hero { padding-top: clamp(72px,9vw,128px); padding-bottom: clamp(40px,5vw,64px); }
+.pf .hero .eyebrow { margin-bottom: 26px; }
+.pf .hero .h1 { margin-bottom: 30px; }
+.pf .hero .lead { font-size: clamp(16px,1.4vw,18px); }
+
+/* ===== Work Cards ===== */
+.pf .work-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: clamp(18px,2vw,26px); }
+.pf .card {
+  background: var(--card); border: 1px solid var(--pf-line-2); border-radius: var(--r-xl);
+  box-shadow: var(--sh-1);
+  transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s, border-color .3s;
 }
-.work-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--radius-lg);
-  background: #fff;
-  padding: 28px;
+.pf .work-card { padding: clamp(28px,3vw,40px); display: flex; flex-direction: column; }
+.pf .work-card:hover { transform: translateY(-5px); box-shadow: var(--sh-3); border-color: var(--pf-line); }
+.pf .work-card .h3 { margin-bottom: 18px; margin-top: 14px; }
+.pf .work-meta { display: grid; gap: 16px; margin-bottom: 28px; }
+.pf .work-meta .row { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; }
+.pf .work-meta .kj { font-size: 12.5px; font-weight: 700; color: var(--ink); padding-top: 2px; }
+.pf .work-meta .v { color: var(--muted); font-size: 14.5px; line-height: 1.8; }
+.pf .work-card .btn { align-self: flex-start; margin-top: auto; }
+
+/* ===== System Cards ===== */
+.pf .system-summary { display: grid; gap: 18px; margin-top: 28px; margin-bottom: clamp(34px,4vw,46px); }
+.pf .summary-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.pf .summary-chip {
+  font-size: 13px; font-weight: 700; color: var(--ink-soft);
+  border: 1px solid var(--pf-line); background: #fff; border-radius: var(--r-chip);
+  padding: 8px 16px; box-shadow: var(--sh-1);
 }
-.work-card .eyebrow {
-  margin: 0;
+.pf .summary-note {
+  background: linear-gradient(125deg, rgba(74,98,197,0.12) 0%, rgba(74,98,197,0.04) 100%);
+  border: 1px solid rgba(74,98,197,0.22); border-radius: var(--r-lg);
+  padding: 18px 22px; color: var(--accent-ink); font-weight: 700; font-size: 15px; line-height: 1.8;
 }
-.work-card h2 {
-  font-size: 24px;
-  line-height: 1.45;
+.pf .sys-kpis { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: clamp(34px,4vw,46px); }
+.pf .sys-kpi {
+  border: 1px solid var(--pf-line-2); background: rgba(255,255,255,0.68); border-radius: 20px;
+  padding: 18px; box-shadow: var(--sh-1);
 }
-.work-card p {
-  color: var(--ink-2);
-  margin: 0;
+.pf .sys-kpi .label { font-size: 12px; color: var(--muted-2); font-family: var(--lat); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+.pf .sys-kpi .value { font-size: clamp(26px,2.8vw,36px); line-height: 1; font-weight: 800; letter-spacing: -0.01em; }
+.pf .sys-showcase-head { display: grid; gap: 8px; margin-bottom: 22px; }
+.pf .sys-showcase-head .kicker { font-family: var(--lat); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); }
+.pf .sys-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(16px,1.8vw,22px); }
+.pf .sys-card { padding: clamp(18px,2.2vw,24px); display: flex; flex-direction: column; gap: 14px; height: 100%; min-height: 100%; }
+.pf .sys-card:hover { transform: translateY(-5px); box-shadow: var(--sh-3); border-color: var(--pf-line); }
+.pf .sys-shot {
+  border-radius: 14px; overflow: hidden; border: 1px solid var(--pf-line-2);
+  height: clamp(190px,17vw,235px); background: #f5f7fb;
 }
-.work-card .actions {
-  margin-top: auto;
+.pf .sys-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf .sys-card .h3 { font-size: 17.5px; line-height: 1.45; }
+.pf .sys-card .desc { color: var(--muted); font-size: 14px; line-height: 1.85; }
+.pf .sys-card .effect-label { font-family: var(--lat); font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-ink); margin-top: auto; padding-top: 16px; border-top: 1px dashed var(--pf-line); }
+.pf .effects { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.pf .effects li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--ink-soft); font-weight: 500; line-height: 1.5; }
+.pf .tick { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%; background: var(--accent-wash); display: grid; place-items: center; }
+.pf .tick svg { width: 10px; height: 10px; stroke: var(--accent); stroke-width: 2.6; fill: none; }
+
+/* ===== Features ===== */
+.pf .feat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: clamp(12px,1.4vw,16px); }
+.pf .feat-item {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border: 1px solid var(--pf-line-2); border-radius: var(--r-md);
+  padding: 18px 20px; box-shadow: var(--sh-1); font-weight: 600; font-size: 15px;
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s;
 }
-.work-card.featured {
-  grid-column: 1 / -1;
-  padding: 38px;
-  gap: 18px;
+.pf .feat-item:hover { transform: translateY(-3px); box-shadow: var(--sh-2); border-color: var(--pf-line); }
+.pf .feat-item .tick { width: 22px; height: 22px; }
+.pf .feat-item .tick svg { width: 12px; height: 12px; }
+.pf .feat-item .feat-icon {
+  width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--pf-line);
+  display: grid; place-items: center; background: #f9fafc; color: var(--ink-soft); font-size: 14px;
 }
-.work-card.featured h2 {
-  font-size: clamp(30px, 3.5vw, 42px);
-  line-height: 1.3;
+.pf .feat-item .feat-icon svg { width: 12px; height: 12px; }
+
+/* ===== Problems ===== */
+.pf .prob-wrap { display: grid; gap: clamp(36px,4vw,52px); }
+.pf .prob-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: clamp(14px,1.4vw,18px); }
+.pf .prob-card {
+  background: var(--card); border: 1px solid var(--pf-line-2); border-radius: var(--r-lg);
+  padding: clamp(30px,3.2vw,38px) clamp(24px,2.2vw,28px); box-shadow: var(--sh-1); display: flex; flex-direction: column; gap: 18px;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
 }
-.work-card.featured p {
-  font-size: 18px;
-  line-height: 1.9;
-  max-width: 72ch;
+.pf .prob-card:hover { transform: translateY(-4px); box-shadow: var(--sh-2); }
+.pf .prob-card .qmark { font-family: var(--lat); font-weight: 800; font-size: 25px; color: var(--accent); line-height: 1; }
+.pf .prob-card p { font-size: 15.5px; font-weight: 700; color: var(--ink-soft); line-height: 1.75; margin: 0; }
+.pf .prob-arrow { display: grid; place-items: center; gap: 14px; }
+.pf .prob-arrow .chev {
+  width: 62px; height: 62px; border-radius: 50%; background: var(--ink);
+  display: grid; place-items: center; box-shadow: var(--sh-2);
+  animation: floaty 2.6s ease-in-out infinite;
 }
-.work-card.featured .actions .btn {
-  font-size: 16px;
-  padding: 14px 24px;
+.pf .prob-arrow .chev svg { width: 24px; height: 24px; stroke: #fff; stroke-width: 2.4; fill: none; }
+.pf .prob-arrow .arrow-note { font-family: var(--lat); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted-2); }
+@keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(6px); } }
+.pf .solution {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-ink) 100%);
+  border-radius: var(--r-xl); padding: clamp(34px,4vw,52px); text-align: center;
+  color: #fff; box-shadow: var(--sh-3);
 }
-.system-work-gallery {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.system-work-visual {
-  background: #fff;
-  border: 1px solid var(--line-2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.system-work-visual img {
-  width: 100%;
-  height: 260px;
-  object-fit: contain;
-  display: block;
-  background: #f4f6fb;
-  padding: 12px;
-}
-.system-work-visual .placeholder {
-  width: 100%;
-  height: 260px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(145deg, #eef2fb 0%, #f7edf1 100%);
-  color: var(--ink-3);
-  font-family: var(--font-en);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--line-2);
-}
-.system-work-visual .body {
-  padding: 18px 20px 22px;
-}
-.system-work-visual h3 {
-  font-size: 17px;
-  line-height: 1.5;
-}
-.system-work-visual p {
-  margin-top: 10px;
-  margin-bottom: 0;
-  color: var(--ink-2);
-  font-size: 14px;
-  line-height: 1.85;
+.pf .solution .h2 { color: #fff; }
+.pf .solution p { color: rgba(255,255,255,0.84); margin-top: 10px; font-size: 15px; }
+.pf .solution .sol-tag {
+  font-family: var(--lat); font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 18px; display: block;
 }
 
-@media (max-width: 980px) {
-  .works-grid {
-    grid-template-columns: 1fr;
-  }
-  .work-card.featured {
-    padding: 30px;
-  }
-  .work-card.featured p {
-    font-size: 16px;
-  }
-  .system-work-gallery {
-    grid-template-columns: 1fr;
-  }
+/* ===== Flow ===== */
+.pf .flow {
+  display: grid; gap: 18px; position: relative;
+  background: linear-gradient(155deg, rgba(255,255,255,0.74) 0%, rgba(255,255,255,0.45) 100%);
+  border: 1px solid var(--pf-line-2); border-radius: var(--r-xl); box-shadow: var(--sh-1);
+  padding: clamp(24px,2.8vw,34px);
 }
-@media (max-width: 1280px) and (min-width: 981px) {
-  .system-work-gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.pf .step {
+  position: relative; z-index: 1; display: grid;
+  grid-template-columns: 64px 1fr; align-items: start; gap: 18px;
+  background: #fff; border-radius: var(--r-lg); border: 1px solid var(--pf-line-2);
+  padding: 18px; box-shadow: 0 1px 1px rgba(16,18,24,0.03);
+  transition: transform .35s, box-shadow .35s, border-color .3s;
+}
+.pf .step:hover { transform: translateY(-3px); box-shadow: var(--sh-2); border-color: var(--pf-line); }
+.pf .step-dot {
+  width: 52px; height: 52px; border-radius: 14px; background: var(--ink);
+  border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center;
+  box-shadow: var(--sh-1); font-family: var(--lat); font-weight: 800; font-size: 18px;
+  color: #fff; letter-spacing: 0.01em;
+}
+.pf .step .kicker { font-family: var(--lat); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.pf .step .st { font-size: 17px; font-weight: 800; letter-spacing: -0.005em; }
+.pf .step .sd { font-size: 14px; color: var(--muted); line-height: 1.8; margin-top: 5px; }
+
+/* ===== CTA ===== */
+.pf .cta-section { padding-bottom: clamp(72px,9vw,120px); }
+.pf .cta {
+  position: relative; overflow: hidden;
+  background: radial-gradient(130% 150% at 100% 0%, #303544 0%, #15171c 52%);
+  border-radius: clamp(24px,3vw,36px); padding: clamp(44px,6vw,84px);
+  color: #fff; box-shadow: 0 26px 55px -20px rgba(17,20,28,0.64);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.pf .cta::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(60% 80% at 12% 110%, rgba(74,98,197,0.30) 0%, transparent 60%);
+  pointer-events: none;
+}
+.pf .cta::after {
+  content: ""; position: absolute; width: 320px; height: 320px; right: -80px; top: -80px;
+  background: radial-gradient(circle, rgba(120,143,255,0.35) 0%, rgba(120,143,255,0) 72%);
+  pointer-events: none;
+}
+.pf .cta-inner { position: relative; max-width: 760px; }
+.pf .cta .eyebrow { color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+.pf .cta .h2 { color: #fff; margin-bottom: 26px; }
+.pf .cta .sub { font-size: 18px; font-weight: 700; color: rgba(255,255,255,0.92); margin-bottom: 14px; }
+.pf .cta p { color: rgba(255,255,255,0.72); font-size: clamp(15px,1.2vw,17px); line-height: 1.95; margin-bottom: 30px; max-width: 62ch; }
+.pf .cta-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 38px; }
+.pf .cta-chips span { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.86); padding: 8px 16px; border-radius: var(--r-chip); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); }
+.pf .cta-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.pf .cta-actions .btn-light {
+  background: #fff; color: #15171c; border-color: transparent; padding-inline: 30px;
+  box-shadow: 0 18px 32px -16px rgba(255,255,255,0.5);
+}
+
+.pf .about {
+  background: linear-gradient(155deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.52) 100%);
+  border: 1px solid var(--pf-line-2); border-radius: var(--r-xl); box-shadow: var(--sh-1);
+  padding: clamp(30px,4vw,48px);
+}
+.pf .stack-wrap { margin-top: clamp(30px,3vw,44px); }
+.pf .stack-title { font-size: clamp(24px,3vw,34px); line-height: 1.25; font-weight: 900; margin: 0 0 18px; letter-spacing: -0.01em; }
+.pf .stack-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.pf .stack-tags span {
+  font-family: var(--lat); font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+  border: 1px solid var(--pf-line); background: #fff; color: var(--ink-soft);
+  border-radius: var(--r-chip); padding: 8px 16px; box-shadow: var(--sh-1);
+}
+
+/* ===== Footer ===== */
+.pf .foot { padding: 40px 0 64px; }
+.pf .foot .small { color: var(--muted-2); font-family: var(--lat); letter-spacing: 0.04em; }
+
+/* ===== Reveal animation ===== */
+.pf .reveal { opacity: 1; transform: translateY(16px); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.pf .reveal.in { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pf .reveal { transform: none; transition: none; }
+  .pf .prob-arrow .chev { animation: none; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px) {
+  .pf .sys-kpis { grid-template-columns: repeat(3,1fr); }
+  .pf .sys-grid { grid-template-columns: repeat(2,1fr); }
+  .pf .feat-grid { grid-template-columns: repeat(3,1fr); }
+  .pf .prob-grid { grid-template-columns: repeat(3,1fr); }
+  .pf .step { grid-template-columns: 56px 1fr; }
+}
+@media (max-width: 760px) {
+  .pf .work-grid { grid-template-columns: 1fr; }
+  .pf .sys-grid { grid-template-columns: 1fr; }
+  .pf .sys-kpis { grid-template-columns: repeat(2,1fr); }
+  .pf .feat-grid { grid-template-columns: repeat(2,1fr); }
+  .pf .prob-grid { grid-template-columns: repeat(2,1fr); }
+  .pf .summary-note { font-size: 14px; }
+}
+@media (max-width: 460px) {
+  .pf .sys-kpis { grid-template-columns: 1fr; }
+  .pf .feat-grid { grid-template-columns: 1fr; }
+  .pf .prob-grid { grid-template-columns: 1fr; }
+  .pf .cta-actions .btn { width: 100%; justify-content: center; }
+  .pf .step { grid-template-columns: 1fr; }
 }
 </style>
 <% end %>
 
-<section class="portfolio">
-  <div class="container">
-    <span class="eyebrow">Portfolio</span>
-    <h1 style="margin-top: 16px;">制作実績一覧</h1>
-    <p class="lede">
-      トップページから各実績ページへ遷移できます。まずは仮の導線として、
-      現在のITコーポレートサイトに移動できるようにしています。
-    </p>
+<div class="pf">
 
-    <div class="works-grid">
-      <article class="work-card">
-        <span class="eyebrow">Work 01</span>
-        <h2>ITコーポレートサイト</h2>
-        <p>企業ブランディングを意識した
-          IT企業向けコーポレートサイトです。
-          会社概要・サービス・お問い合わせ導線を含みます。</p>
-        <div class="actions">
-          <%= link_to it_corporate_path, class: "btn btn-primary" do %>
-            サイトを見る
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          <% end %>
+  <%# ===== ABOUT ===== %>
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="reveal about">
+        <span class="eyebrow accent">About Developer</span>
+        <h2 class="h2" style="margin-top:18px;">開発者について</h2>
+        <p class="lead" style="margin-top:18px; max-width: 70ch;">
+          福岡を拠点にホームページ制作と業務システム開発を行っています。<br>
+          実際にレンタカー事業の運営にも携わっており、現場の課題を理解した上でシステム設計・開発を行っています。<br>
+          単なる開発ではなく、業務効率化や売上向上につながる仕組み作りを重視しています。
+        </p>
+        <div class="stack-wrap">
+          <h3 class="stack-title">使用技術</h3>
+          <div class="stack-tags">
+            <% ["Rails","Stripe","LINE Messaging API","AWS","Docker","Supabase","MySQL","Webhook"].each do |tech| %>
+              <span><%= tech %></span>
+            <% end %>
+          </div>
         </div>
-      </article>
+      </div>
+    </div>
+  </section>
 
-      <article class="work-card">
-        <span class="eyebrow">Work 02</span>
-        <h2>レンタカーLP</h2>
-        <p>予約導線と問い合わせ獲得を重視した
-          レンタカー向けLPページです。</p>
-        <div class="actions">
-          <%= link_to renta_car_path, class: "btn btn-primary" do %>
-            サイトを見る
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          <% end %>
+  <%# ===== SYSTEM DEVELOPMENT ===== %>
+  <section class="section" id="system">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="reveal"><span class="eyebrow accent">System Development</span></div>
+        <div class="reveal" style="transition-delay:60ms"><h2 class="h2">レンタカー業界向け<br>システム開発</h2></div>
+        <div class="reveal" style="transition-delay:120ms">
+          <p class="lead">実際にレンタカー事業で運用しているシステムを開発しています。</p>
         </div>
-      </article>
-
-      <article class="work-card featured">
-        <span class="eyebrow">System Development</span>
-        <h2>システム開発実績</h2>
-        <p>レンタカー業務の改善や運用最適化につながるシステム開発実績を、代表的な画面とともに紹介しています。
-          その他では車検の自動通知やリピート率の可視化などを行っています。</p>
-        <div class="actions">
-          <span class="btn btn-ghost" style="pointer-events: none; opacity: .7;">下記に実績を掲載中</span>
+        <div class="reveal system-summary" style="transition-delay:180ms">
+          <div class="summary-chips">
+            <% ["予約管理システム","LINE自動通知","Stripe決済連携","売上分析","リピート分析","キャンセル分析","クーポン管理","ダッシュボード開発"].each do |chip| %>
+              <span class="summary-chip"><%= chip %></span>
+            <% end %>
+          </div>
+          <div class="summary-note">実際にレンタカー事業で運用しているシステムを開発しています。</div>
         </div>
-      </article>
-
-      <div class="system-work-gallery">
-        <article class="system-work-visual">
-          <%= image_tag "system_works/system_work_line.png", alt: "LINE連携で予約確認を通知する画面" %>
-          <div class="body">
-            <h3>LINE連携による予約確認の自動通知</h3>
-            <p>申し込み内容を自動通知し、対応漏れ防止と業務効率化を実現。</p>
+      </div>
+      <div class="reveal sys-kpis" style="transition-delay:220ms">
+        <% [
+          { label: "開発実績", value: "8+" },
+          { label: "実装機能", value: "20+" },
+          { label: "管理画面", value: "6+" },
+          { label: "分析ダッシュボード", value: "4+" },
+          { label: "LINE・決済連携", value: "2+" }
+        ].each do |kpi| %>
+          <div class="sys-kpi">
+            <div class="label"><%= kpi[:label] %></div>
+            <div class="value"><%= kpi[:value] %></div>
           </div>
+        <% end %>
+      </div>
+
+      <div class="reveal sys-showcase-head" style="transition-delay:260ms">
+        <span class="kicker">System Screenshots</span>
+        <h3 class="h3">実際に開発したシステム画面</h3>
+      </div>
+      <div class="reveal sys-grid" style="transition-delay:320ms">
+        <article class="card sys-card">
+          <figure class="sys-shot"><%= image_tag "system_works/system_work_admin.png", alt: "予約管理・顧客管理システムの実画面", loading: "lazy" %></figure>
+          <h3 class="h3">予約管理・顧客管理システム</h3>
+          <p class="desc">予約情報、顧客情報、予約ステータスを一元管理。複数条件検索やステータス管理に対応し、業務効率化を実現。</p>
+          <div class="effect-label">導入メリット</div>
+          <ul class="effects">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>管理工数削減</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>顧客情報の一元管理</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>スタッフ対応効率向上</li>
+          </ul>
         </article>
-
-        <article class="system-work-visual">
-          <%= image_tag "system_works/system_work_admin.png", alt: "予約一覧を管理する管理画面" %>
-          <div class="body">
-            <h3>予約一覧・絞り込み管理画面</h3>
-            <p>予約ステータスや支払方法など複数条件で絞り込み、予約・顧客・ステータス管理を一元化し、確認業務を効率化。</p>
-          </div>
+        <article class="card sys-card">
+          <figure class="sys-shot"><%= image_tag "system_works/system_work_sales_actual.png", alt: "売上分析ダッシュボードの実画面", loading: "lazy" %></figure>
+          <h3 class="h3">売上分析ダッシュボード</h3>
+          <p class="desc">店舗別・車両別・月別売上を可視化。運営判断に必要なデータをリアルタイムで確認可能。</p>
+          <div class="effect-label">導入メリット</div>
+          <ul class="effects">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>売上状況の可視化</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>店舗別分析</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>車両別分析</li>
+          </ul>
         </article>
-
-        <article class="system-work-visual">
-          <%= image_tag "system_works/system_work_analytics.png", alt: "月別予約数の可視化ダッシュボード画面" %>
-          <div class="body">
-            <h3>月別予約推移の可視化ダッシュボード</h3>
-            <p>月別・拠点別データを可視化し、運営改善と意思決定を支援。</p>
-          </div>
+        <article class="card sys-card">
+          <figure class="sys-shot"><%= image_tag "system_works/system_work_repeat_actual.png", alt: "顧客リピート分析の実画面", loading: "lazy" %></figure>
+          <h3 class="h3">顧客リピート分析</h3>
+          <p class="desc">利用回数やリピート率を分析し、顧客維持施策に活用。</p>
+          <div class="effect-label">導入メリット</div>
+          <ul class="effects">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>リピーター分析</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>LINE施策分析</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>LTV向上</li>
+          </ul>
         </article>
-
-        <article class="system-work-visual">
-          <%= image_tag "system_works/system_work_stripe_logo.png", alt: "Stripe公式ロゴ画像" %>
-          <div class="body">
-            <h3>Stripe決済連携</h3>
-            <p>クレジットカード決済をStripeで安全に処理。予約フローから決済完了までをシームレスに連携し、管理画面への反映まで自動化。</p>
-          </div>
+        <article class="card sys-card">
+          <figure class="sys-shot"><%= image_tag "system_works/system_work_cancel_actual.png", alt: "キャンセル率分析の実画面", loading: "lazy" %></figure>
+          <h3 class="h3">キャンセル率分析</h3>
+          <p class="desc">予約数、確定率、キャンセル率を可視化。運営改善や広告施策改善に活用。</p>
+          <div class="effect-label">導入メリット</div>
+          <ul class="effects">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>キャンセル率把握</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>月別比較分析</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>収益改善</li>
+          </ul>
         </article>
-
-        <article class="system-work-visual">
-          <%= image_tag "system_works/system_work_status_notification.png", alt: "ステータス変更時に自動送信される通知画面" %>
-          <div class="body">
-            <h3>ステータス変更時の自動メッセージ通知</h3>
-            <p>「確定」「キャンセル」などのステータス変更に応じて通知文面を自動送信。案内漏れを減らし、顧客対応の速度と品質を向上。</p>
-          </div>
+        <article class="card sys-card">
+          <figure class="sys-shot"><%= image_tag "system_works/system_work_daily_actual.png", alt: "予約推移分析の実画面", loading: "lazy" %></figure>
+          <h3 class="h3">予約推移分析</h3>
+          <p class="desc">曜日別・日別予約数を可視化。繁忙期分析や車両配置計画に活用。</p>
+          <div class="effect-label">導入メリット</div>
+          <ul class="effects">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>繁忙日分析</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>車両配置最適化</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>需要予測</li>
+          </ul>
+        </article>
+        <article class="card sys-card">
+          <figure class="sys-shot"><%= image_tag "system_works/system_work_coupon_actual.png", alt: "クーポン管理システムの実画面", loading: "lazy" %></figure>
+          <h3 class="h3">クーポン管理システム</h3>
+          <p class="desc">クーポン発行から利用状況管理まで対応。販促施策の効果測定も可能。</p>
+          <div class="effect-label">導入メリット</div>
+          <ul class="effects">
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>クーポン一元管理</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>利用状況分析</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>販促施策改善</li>
+          </ul>
         </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <%# ===== FEATURES ===== %>
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="reveal"><span class="eyebrow accent">Capabilities</span></div>
+        <div class="reveal" style="transition-delay:60ms"><h2 class="h2">開発可能な機能</h2></div>
+        <div class="reveal" style="transition-delay:120ms"><p class="lead">業種を問わず以下のような業務システム開発に対応しています。</p></div>
+      </div>
+      <div class="reveal feat-grid">
+        <% ["予約システム","顧客管理","会員管理","LINE連携","Stripe決済","売上分析","ダッシュボード","CSV出力","Googleマップ連携","メール自動送信","権限管理","API連携"].each do |feat| %>
+          <div class="feat-item">
+            <span class="feat-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12"><path d="M2 6.2 L4.7 9 L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </span>
+            <%= feat %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ===== PROBLEMS ===== %>
+  <section class="section" id="problems">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="reveal"><span class="eyebrow accent">Challenges</span></div>
+        <div class="reveal" style="transition-delay:60ms"><h2 class="h2">こんなお悩み<br>ありませんか？</h2></div>
+      </div>
+      <div class="prob-wrap">
+        <div class="reveal prob-grid">
+          <% ["予約管理をExcelで行っている","LINE対応が手作業","顧客情報が分散している","売上分析ができていない","問い合わせ管理が煩雑"].each do |prob| %>
+            <div class="prob-card">
+              <span class="qmark">?</span>
+              <p><%= prob %></p>
+            </div>
+          <% end %>
+        </div>
+        <div class="reveal prob-arrow" style="transition-delay:80ms">
+          <span class="arrow-note">Systemize</span>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 18 18"><path d="M4 6l5 6 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="reveal solution" style="transition-delay:120ms">
+          <span class="sol-tag">Solution</span>
+          <h2 class="h2">システム化で解決できます</h2>
+          <p>現場起点で設計し、日々の業務負担を減らしながら売上改善につながる仕組みへ変えていきます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ===== FLOW ===== %>
+  <section class="section" id="flow">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="reveal"><span class="eyebrow accent">Process</span></div>
+        <div class="reveal" style="transition-delay:60ms"><h2 class="h2">開発の流れ</h2></div>
+      </div>
+      <div class="reveal flow">
+        <% [
+          { t: "ヒアリング",       d: "現状の課題やご要望を丁寧にお伺いします。" },
+          { t: "要件整理",         d: "業務フローを整理し、最適な要件を定義します。" },
+          { t: "デザイン作成",     d: "使いやすさを重視したUI / UXを設計します。" },
+          { t: "開発",             d: "要件に基づき、堅実に開発・テストを行います。" },
+          { t: "納品・運用サポート", d: "納品後も運用と改善を継続的にサポートします。" }
+        ].each_with_index do |step, i| %>
+          <div class="step">
+            <span class="step-dot"><%= i + 1 %></span>
+            <div class="step-body">
+              <div class="kicker">STEP <%= "%02d" % (i + 1) %></div>
+              <div class="st"><%= step[:t] %></div>
+              <div class="sd"><%= step[:d] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# ===== CTA ===== %>
+  <section class="cta-section" id="contact">
+    <div class="wrap">
+      <div class="reveal cta">
+        <div class="cta-inner">
+          <span class="eyebrow">Contact</span>
+          <h2 class="h2">無料相談受付中</h2>
+          <p class="sub">ホームページ制作から業務システム開発まで対応しています</p>
+          <p>予約システム、LINE連携、Stripe決済、自動化開発、ダッシュボード構築などお気軽にご相談ください。</p>
+          <div class="cta-chips">
+            <% ["予約システム","LINE連携","Stripe決済","業務自動化","ダッシュボード構築"].each do |chip| %>
+              <span><%= chip %></span>
+            <% end %>
+          </div>
+          <div class="cta-actions">
+            <%= link_to new_contact_path, class: "btn btn-light" do %>
+              無料相談する
+              <svg class="arr" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.5h10M9 4.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ===== HERO ===== %>
+  <header class="hero">
+    <div class="wrap">
+      <div class="reveal"><span class="eyebrow">Portfolio</span></div>
+      <div class="reveal" style="transition-delay:60ms"><h1 class="h1">制作実績一覧</h1></div>
+      <div class="reveal" style="transition-delay:120ms">
+        <p class="lead">その他ホームページ制作からLPの作成まで、制作実績を紹介しています。</p>
+      </div>
+    </div>
+  </header>
+
+  <%# ===== WORKS ===== %>
+  <section class="section" id="works">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom: 20px;">
+        <p class="small">※以下は提案力・設計力を示すための自主制作サンプルです。クライアントからの依頼案件ではありません。</p>
+      </div>
+      <div class="reveal work-grid">
+        <article class="card work-card">
+          <span class="eyebrow">SAMPLE 01</span>
+          <h3 class="h3">ITコーポレートサイト</h3>
+          <div class="work-meta">
+            <div class="row"><span class="kj">区分</span><span class="v">自主制作（依頼案件ではありません）</span></div>
+            <div class="row"><span class="kj">概要</span><span class="v">企業ブランディングを意識したIT企業向けコーポレートサイト。会社概要・サービス・お問い合わせ導線までを設計。</span></div>
+            <div class="row"><span class="kj">制作目的</span><span class="v">信頼感のある企業ブランディングと、問い合わせ獲得の最大化。</span></div>
+          </div>
+          <%= link_to it_corporate_path, class: "btn btn-dark" do %>
+            サイトを見る
+            <svg class="arr" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.5h10M9 4.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <% end %>
+        </article>
+
+        <article class="card work-card">
+          <span class="eyebrow">SAMPLE 02</span>
+          <h3 class="h3">レンタカーLP</h3>
+          <div class="work-meta">
+            <div class="row"><span class="kj">区分</span><span class="v">自主制作（依頼案件ではありません）</span></div>
+            <div class="row"><span class="kj">概要</span><span class="v">予約導線と問い合わせ獲得を重視したレンタカー向けランディングページ。</span></div>
+            <div class="row"><span class="kj">制作目的</span><span class="v">予約・問い合わせのコンバージョン率を高める導線設計。</span></div>
+          </div>
+          <%= link_to renta_car_path, class: "btn btn-dark" do %>
+            サイトを見る
+            <svg class="arr" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.5h10M9 4.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <% end %>
+        </article>
+
+        <%# <article class="card work-card">
+          <span class="eyebrow">WORK 03</span>
+          <h3 class="h3">採用サイト</h3>
+          <div class="work-meta">
+            <div class="row"><span class="kj">概要</span><span class="v">求職者に企業の魅力と働く環境を伝える、採用に特化したサイト。</span></div>
+            <div class="row"><span class="kj">制作目的</span><span class="v">エントリー数の増加と、採用ミスマッチの低減。</span></div>
+          </div>
+          <a href="#" class="btn btn-dark">
+            サイトを見る
+            <svg class="arr" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.5h10M9 4.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <article class="card work-card">
+          <span class="eyebrow">WORK 04</span>
+          <h3 class="h3">サービス紹介サイト</h3>
+          <div class="work-meta">
+            <div class="row"><span class="kj">概要</span><span class="v">サービスの強みと導入メリットを分かりやすく伝える紹介サイト。</span></div>
+            <div class="row"><span class="kj">制作目的</span><span class="v">サービス理解の促進と、商談・問い合わせの獲得。</span></div>
+          </div>
+          <a href="#" class="btn btn-dark">
+            サイトを見る
+            <svg class="arr" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.5h10M9 4.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article> %>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap"><p class="small">&copy; <%= Time.current.year %> Portfolio — Web &amp; System Development</p></div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  var els = document.querySelectorAll('.pf .reveal');
+  function show(el) { el.classList.add('in'); }
+  function check(el) {
+    var r = el.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    return r.top < vh * 0.95 && r.bottom > 0;
+  }
+  els.forEach(function(el) {
+    if (check(el)) { show(el); return; }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      io.observe(el);
+    } else {
+      setTimeout(function() { show(el); }, 1600);
+    }
+  });
+  window.addEventListener('scroll', function() {
+    els.forEach(function(el) { if (!el.classList.contains('in') && check(el)) show(el); });
+  }, { passive: true });
+})();
+</script>
